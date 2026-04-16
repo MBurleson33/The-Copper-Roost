@@ -967,26 +967,24 @@
 
     @media (min-width: 901px) {
       .fixed-book {
-        display: block;
-        position: fixed;
-        /* Anchor the right edge of the (rotated) element flush with the viewport edge.
-           After rotating 90deg, the element's "width" becomes its height in layout space.
-           We use right:0 + transform-origin:right center so the right side stays pinned. */
-        right: 0;
-        top: 22%;
-        transform: rotate(90deg);
-        transform-origin: right center;
-        background: #B8720A;
-        color: #fff;
-        font-family: 'Cinzel', serif;
-        font-size: 0.6rem;
-        letter-spacing: 0.25em;
-        text-transform: uppercase;
-        padding: 0.75rem 1.4rem;
-        text-decoration: none;
-        z-index: 500;
-        transition: background 0.3s;
-        white-space: nowrap;
+       display: block;
+  position: fixed;
+  right: 0;
+  top: 22%;
+        transform: translateX(50%) rotate(90deg);
+  transform-origin: right center;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  background: #B8720A;
+  color: #fff;
+  font-family: 'Cinzel', serif;
+  font-size: 0.6rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  padding: 1.4rem 0.75rem;
+  text-decoration: none;
+  z-index: 500;
+  white-space: nowrap;
       }
       .fixed-book:hover { background: #9a5f08; }
       .fixed-book:focus-visible { outline: 3px solid #1a1a1a; outline-offset: 2px; }
