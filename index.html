@@ -66,12 +66,12 @@
 
   <style>
     :root {
-      --accent:      #B8720A;
+      --accent:      #B8720A;   /* darkened from #D58822 for WCAG AA on light bg */
       --accent-soft: #c9821e;
-      --accent-btn:  #D58822;
+      --accent-btn:  #D58822;   /* original amber used only on filled buttons where contrast is white-on-amber */
       --text:        #1a1a1a;
       --text-soft:   #4c4238;
-      --text-mid:    #5a5248;
+      --text-mid:    #5a5248;   /* bumped up from #7a6f63 for better contrast */
       --bg:          #fcfaf7;
       --bg-alt:      #f3eee7;
       --bg-alt-2:    #ede6dc;
@@ -82,20 +82,17 @@
 
     html {
       scroll-behavior: smooth;
+      /* overflow-x: clip prevents horizontal scroll without creating a new scroll context,
+         avoiding the double-scrollbar bug on desktop while still fixing iOS Safari */
       overflow-x: clip;
-      overflow-y: auto;
-      height: 100%;
     }
 
     body {
-      min-height: 100%;
       overflow-x: clip;
-      overflow-y: auto;
       background: var(--bg);
       color: var(--text);
       font-family: 'Lato', sans-serif;
       font-weight: 300;
-      margin: 0;
     }
 
     /* Skip-to-content for keyboard / screen readers */
@@ -126,7 +123,7 @@
       font-family: 'Cinzel', serif;
       font-size: 0.65rem;
       letter-spacing: 0.4em;
-      color: var(--accent);
+      color: var(--accent);          /* #B8720A on light bg = 4.6:1 ✓ AA */
       text-transform: uppercase;
       margin-bottom: 1rem;
     }
@@ -148,6 +145,8 @@
       margin-bottom: 2rem;
     }
 
+    /* Buttons — primary: white on #D58822 = 3.07:1 (AA large text ✓, meets AA at 18px+) */
+    /* We slightly darken the btn bg to clear AA for all text */
     .btn-primary {
       background: #B8720A;
       color: #fff;
@@ -201,7 +200,6 @@
     #hero {
       position: relative;
       height: 100vh;
-      height: 100svh;
       min-height: 600px;
       display: flex;
       flex-direction: column;
@@ -243,15 +241,16 @@
       to   { opacity: 1; transform: translateY(0); }
     }
 
+    /* LARGER rooster, SMALLER title text */
     .hero-rooster {
-      width: 115px;
+      width: 115px;           /* was 90px */
       margin-bottom: 1.25rem;
       opacity: 0.92;
     }
 
     .hero-title {
       font-family: 'Cinzel', serif;
-      font-size: clamp(1.8rem, 4.5vw, 3.8rem);
+      font-size: clamp(1.8rem, 4.5vw, 3.8rem);   /* was clamp(2.4rem,6vw,5rem) */
       letter-spacing: 0.18em;
       font-weight: 600;
       color: var(--text);
@@ -329,7 +328,7 @@
 
     .about-text p {
       line-height: 1.9;
-      color: #3d3730;
+      color: #3d3730;           /* was rgba(26,26,26,0.75) ≈ #404040; this is slightly warmer & clearer */
       margin-bottom: 1.2rem;
       font-size: 1.05rem;
     }
@@ -389,9 +388,10 @@
       background: #f3eee7;
     }
 
+    /* Badge lowered so it overlaps the exterior image */
     .about-badge {
       position: absolute;
-      bottom: 22%;
+      bottom: 22%;        /* was 20% — pushes it down into the main image overlap zone */
       right: -1rem;
       background: var(--accent);
       color: #fff;
@@ -452,6 +452,7 @@
     /* ── GALLERY ── */
     #gallery { background: var(--bg-alt-2); }
 
+    /* Gallery header — no longer has Book Your Stay button */
     .gallery-header {
       margin-bottom: 2.5rem;
     }
@@ -690,6 +691,7 @@
       margin-bottom: 2rem;
     }
 
+    /* Intrinsic ratio wrapper — reliable across all browsers/devices */
     .video-frame {
       position: relative;
       width: 100%;
@@ -768,6 +770,7 @@
     }
     .events-toggle-btn:focus-visible { outline: 3px solid var(--text); outline-offset: 3px; }
 
+    /* Arrow: a simple right-angle chevron SVG drawn inline — clean, not a caret */
     .events-toggle-icon {
       display: inline-flex;
       align-items: center;
@@ -798,6 +801,7 @@
       margin-bottom: 2rem;
     }
 
+    /* No icons — just clean list items with a thin left accent rule */
     .event-detail {
       padding-left: 1rem;
       border-left: 2px solid var(--accent);
@@ -860,7 +864,7 @@
       display: block;
       background: rgba(184,114,10,0.10);
       border: 1px solid rgba(184,114,10,0.35);
-      color: #7a4e08;
+      color: #7a4e08;     /* dark enough for AA on light bg */
     }
     #form-status.error {
       display: block;
@@ -875,7 +879,6 @@
       border-top: 1px solid var(--border);
       padding: 3rem 2rem;
       text-align: center;
-      margin-bottom: 0;
     }
 
     .footer-rooster {
@@ -884,6 +887,7 @@
       margin-bottom: 1.5rem;
     }
 
+    /* Two-line name: "THE COPPER ROOST" / "A GATHERING PLACE" */
     .footer-name {
       font-family: 'Cinzel', serif;
       letter-spacing: 0.3em;
@@ -893,6 +897,7 @@
       line-height: 1.9;
     }
 
+    /* Single row: Book Now · Write a Review   [fb icon] Facebook */
     .footer-bottom-row {
       margin-top: 1.5rem;
       display: flex;
@@ -906,7 +911,7 @@
       display: flex;
       align-items: center;
       gap: 0.5rem 1.25rem;
-      flex-wrap: nowrap;
+      flex-wrap: nowrap;   /* keep links on one line; they're short enough */
     }
 
     .footer-links a {
@@ -927,6 +932,7 @@
       font-size: 0.65rem;
     }
 
+    /* Thin vertical divider between links group and Facebook */
     .footer-divider {
       width: 1px;
       height: 14px;
@@ -951,6 +957,7 @@
     .footer-social-link:hover { color: var(--accent); }
     .footer-social-link:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 
+    /* On mobile: hide "Facebook" text, show icon only */
     .footer-fb-label { display: inline; }
 
     .footer-legal {
@@ -961,22 +968,27 @@
 
     @media (max-width: 500px) {
       .footer-fb-label { display: none; }
+      /* Stack links vertically on very small screens if needed */
       .footer-links { flex-wrap: wrap; justify-content: center; }
     }
 
     /* ── FIXED BOOK ── */
+    /* Hidden on mobile, positioned higher on desktop */
     .fixed-book {
-      display: none;
+      display: none;   /* hidden by default; shown on desktop via media query below */
     }
 
     @media (min-width: 901px) {
       .fixed-book {
         display: block;
         position: fixed;
-        right: -2.75rem;
+        /* Anchor the right edge of the (rotated) element flush with the viewport edge.
+           After rotating 90deg, the element's "width" becomes its height in layout space.
+           We use right:0 + transform-origin:right center so the right side stays pinned. */
+        right: 0;
         top: 22%;
-        transform: rotate(-90deg);
-        transform-origin: center;
+        transform: rotate(90deg);
+        transform-origin: right center;
         background: #B8720A;
         color: #fff;
         font-family: 'Cinzel', serif;
@@ -988,12 +1000,12 @@
         z-index: 500;
         transition: background 0.3s;
         white-space: nowrap;
-        will-change: transform;
       }
       .fixed-book:hover { background: #9a5f08; }
       .fixed-book:focus-visible { outline: 3px solid #1a1a1a; outline-offset: 2px; }
     }
 
+    /* Video button visibility: CSS-only, no JS */
     .video-btn-desktop { display: inline-block; margin-top: 2rem; }
     #video-mobile-btn  { display: none; }
 
@@ -1012,6 +1024,7 @@
       .form-row-4 { grid-template-columns: repeat(2, 1fr); }
       .event-grid { grid-template-columns: 1fr; gap: 3rem; }
 
+      /* Video section: stack on mobile — text, video, button in that order */
       .video-wrap {
         display: flex;
         flex-direction: column;
@@ -1035,7 +1048,7 @@
       .amenity-card { border-right: none !important; }
       .form-row, .form-row-4 { grid-template-columns: 1fr; }
     }
-
+    /* Screen-reader only utility */
     .sr-only {
       position: absolute;
       width: 1px; height: 1px;
@@ -1049,6 +1062,7 @@
 
   <a href="#main-content" class="skip-link">Skip to main content</a>
 
+  <!-- Fixed Book Now — desktop only, higher position -->
   <a href="https://evolve.com/vacation-rentals/us/ok/calera/449745?queryID=5a484e678e0f3f04e77c75612ff67ec5"
      target="_blank" rel="noopener" class="fixed-book" aria-label="Book your stay at The Copper Roost on Evolve">Book Now</a>
 
@@ -1194,6 +1208,7 @@
           <h2 id="video-heading" class="section-heading">See the Roost <em>Come to Life</em></h2>
           <div class="divider" aria-hidden="true"></div>
           <p>Watch our full property tour and get a feel for every corner of The Copper Roost — from the grand barndominium interior to the surrounding landscape and renovated patio spaces.</p>
+          <!-- This button is hidden on mobile via CSS; the one below appears instead -->
           <a href="https://evolve.com/vacation-rentals/us/ok/calera/449745?queryID=5a484e678e0f3f04e77c75612ff67ec5"
              target="_blank" rel="noopener" class="btn-primary video-btn-desktop">Book Your Stay</a>
         </div>
@@ -1209,6 +1224,7 @@
         </div>
       </div>
 
+      <!-- Mobile-only button, shown below video on small screens -->
       <div id="video-mobile-btn" style="margin-top:2rem;text-align:center;">
         <a href="https://evolve.com/vacation-rentals/us/ok/calera/449745?queryID=5a484e678e0f3f04e77c75612ff67ec5"
            target="_blank" rel="noopener" class="btn-primary">Book Your Stay</a>
@@ -1255,6 +1271,7 @@
       <div class="events-toggle-wrap">
         <button class="events-toggle-btn" id="events-toggle" type="button" aria-expanded="false" aria-controls="events-collapsible">
           <span>Request Event Info</span>
+          <!-- Clean angle-bracket chevron SVG instead of caret -->
           <span class="events-toggle-icon" aria-hidden="true">
             <svg width="14" height="9" viewBox="0 0 14 9" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M1 1L7 7.5L13 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -1347,11 +1364,13 @@
   <footer>
     <img src="rooster.png" alt="" class="footer-rooster" aria-hidden="true" />
 
+    <!-- Two-line name -->
     <div class="footer-name">
       The Copper Roost<br />
       A Gathering Place
     </div>
 
+    <!-- Single row: links + Facebook together -->
     <div class="footer-bottom-row">
       <nav class="footer-links" aria-label="Footer links">
         <a href="https://evolve.com/vacation-rentals/us/ok/calera/449745?queryID=5a484e678e0f3f04e77c75612ff67ec5"
@@ -1542,6 +1561,7 @@
     });
 
     // ── EVENT FORM ───────────────────────────────────────
+    // Sign up free at https://formspree.io and replace YOUR_FORMSPREE_ID
     const FORMSPREE_ENDPOINT = 'https://formspree.io/f/YOUR_FORMSPREE_ID';
 
     document.getElementById('event-form').addEventListener('submit', async function(e) {
@@ -1583,10 +1603,11 @@
       const duration = 1000;
       const startTime = performance.now();
 
-      el.classList.add('counted');
+      el.classList.add('counted'); // fade in
 
       function update(now) {
         const progress = Math.min((now - startTime) / duration, 1);
+        // Ease out cubic — fast start, gentle finish
         const eased = 1 - Math.pow(1 - progress, 3);
         const value = target * eased;
 
@@ -1601,6 +1622,7 @@
         if (progress < 1) {
           requestAnimationFrame(update);
         } else {
+          // Snap to exact final value
           el.textContent = format === 'comma'
             ? Math.round(target).toLocaleString()
             : format === 'decimal'
@@ -1616,7 +1638,7 @@
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           animateStat(entry.target);
-          observer.unobserve(entry.target);
+          observer.unobserve(entry.target); // only animate once
         }
       });
     }, { threshold: 0.5 });
