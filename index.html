@@ -4,13 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- ── SEO ── -->
+  <!-- SEO -->
   <title>The Copper Roost | Barndominium Vacation Rental Near Lake Texoma, Oklahoma</title>
   <meta name="description" content="The Copper Roost is a 5,000 sq ft barndominium vacation rental near Lake Texoma, Oklahoma. Sleeps up to 16. 5 bedrooms, 4.5 bathrooms, game room, movie room, and renovated patio. Book your family getaway or private event today." />
   <meta name="keywords" content="barndominium rental Oklahoma, Lake Texoma vacation rental, Calera Oklahoma Airbnb, family vacation rental Oklahoma, large group rental Oklahoma, barndominium near Lake Texoma, Choctaw Casino nearby rental" />
   <link rel="canonical" href="https://thecopperroost.com/" />
 
-  <!-- ── Open Graph / Social ── -->
+  <!-- Open Graph / Social -->
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://thecopperroost.com/" />
   <meta property="og:title" content="The Copper Roost | Barndominium Vacation Rental Near Lake Texoma" />
@@ -20,13 +20,13 @@
   <meta property="og:site_name" content="The Copper Roost" />
   <meta property="og:locale" content="en_US" />
 
-  <!-- ── Twitter Card ── -->
+  <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="The Copper Roost | Barndominium Rental Near Lake Texoma" />
   <meta name="twitter:description" content="5,000 sq ft family barndominium near Lake Texoma, OK. Sleeps 16. Book your stay today." />
   <meta name="twitter:image" content="https://thecopperroost.com/photos/photo-01.jpg" />
 
-  <!-- ── Structured Data (JSON-LD) ── -->
+  <!-- Structured Data -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -186,6 +186,7 @@
       outline-offset: 3px;
     }
 
+    /* HERO */
     #hero {
       position: relative;
       height: 100vh;
@@ -301,9 +302,10 @@
     }
     @keyframes scrollPulse {
       0%, 100% { opacity: 0.4; transform: scaleY(1); }
-      50%       { opacity: 1;   transform: scaleY(1.15); }
+      50% { opacity: 1; transform: scaleY(1.15); }
     }
 
+    /* ABOUT */
     #about { background: var(--bg-alt); }
 
     .about-grid {
@@ -384,6 +386,7 @@
       z-index: 2;
     }
 
+    /* AMENITIES */
     #amenities { background: #faf6f0; }
 
     .amenities-intro {
@@ -407,7 +410,7 @@
       transition: background 0.3s;
       text-align: center;
     }
-    .amenity-card:nth-child(3n)        { border-right: none; }
+    .amenity-card:nth-child(3n) { border-right: none; }
     .amenity-card:nth-last-child(-n+3) { border-bottom: none; }
     .amenity-card:hover { background: rgba(184,114,10,0.05); }
 
@@ -428,6 +431,7 @@
       margin: 0 auto;
     }
 
+    /* GALLERY */
     #gallery { background: var(--bg-alt-2); }
 
     .gallery-header {
@@ -530,101 +534,107 @@
       text-align: center;
     }
 
+    /* GALLERY MODAL - THIS IS THE IMPORTANT PART */
     #gallery-modal {
       display: none;
       position: fixed;
       inset: 0;
       z-index: 9000;
-      background: rgba(16,12,8,0.97);
-      flex-direction: column;
+      background: rgba(16,12,8,0.98);
     }
-    #gallery-modal.open { display: flex; }
+
+    #gallery-modal.open {
+      display: block;
+    }
 
     .gm-header {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 20;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0.75rem 1rem;
-      border-bottom: 1px solid rgba(255,255,255,0.08);
-      flex-shrink: 0;
+      padding: 1rem 1.25rem;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.45), rgba(0,0,0,0));
     }
 
     .gm-title {
       font-family: 'Cinzel', serif;
       font-size: 0.65rem;
-      letter-spacing: 0.35em;
+      letter-spacing: 0.3em;
       text-transform: uppercase;
-      color: rgba(255,255,255,0.6);
+      color: rgba(255,255,255,0.75);
     }
 
     .gm-counter {
       font-family: 'Playfair Display', serif;
-      font-size: 0.9rem;
-      color: rgba(255,255,255,0.45);
+      font-size: 0.95rem;
+      color: rgba(255,255,255,0.75);
       font-style: italic;
     }
 
     .gm-close {
-      background: none;
-      border: none;
-      color: rgba(255,255,255,0.7);
-      font-size: 1.6rem;
+      background: rgba(0,0,0,0.35);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: #fff;
+      font-size: 1.4rem;
       cursor: pointer;
-      line-height: 1;
-      padding: 0.5rem;
-      transition: color 0.2s;
+      width: 46px;
+      height: 46px;
       min-width: 44px;
       min-height: 44px;
       display: flex;
       align-items: center;
       justify-content: center;
     }
-    .gm-close:hover { color: #fff; }
+    .gm-close:hover { color: #fff; border-color: var(--accent); }
     .gm-close:focus-visible { outline: 2px solid rgba(255,255,255,0.6); outline-offset: 2px; }
 
     .gm-main {
-      flex: 1;
+      position: absolute;
+      inset: 0;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 1rem;
-      padding: 0.75rem 1rem;
-      min-height: 0;
     }
 
     .gm-img-wrap {
-      flex: 1;
+      width: 100vw;
+      height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 100%;
-      height: 100%;
-      max-height: 100%;
+      padding: 2rem;
     }
 
     #gm-img {
+      max-width: 96vw;
+      max-height: 96vh;
       width: auto;
       height: auto;
-      max-width: 92vw;
-      max-height: 88vh;
       object-fit: contain;
       display: block;
       transition: opacity 0.2s;
-      cursor: default;
     }
 
     #gm-img.fading { opacity: 0; }
 
     .gm-nav {
-      background: none;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 20;
+      background: rgba(0,0,0,0.35);
       border: 1px solid rgba(255,255,255,0.2);
       color: #fff;
-      font-size: 1.8rem;
-      width: 54px; height: 54px;
-      min-width: 44px; min-height: 44px;
+      font-size: 2rem;
+      width: 54px;
+      height: 54px;
+      min-width: 44px;
+      min-height: 44px;
       cursor: pointer;
-      flex-shrink: 0;
-      transition: border-color 0.2s, color 0.2s;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -632,13 +642,21 @@
     .gm-nav:hover { border-color: var(--accent); color: var(--accent); }
     .gm-nav:focus-visible { outline: 2px solid rgba(255,255,255,0.6); outline-offset: 2px; }
 
+    #gm-prev { left: 1rem; }
+    #gm-next { right: 1rem; }
+
     .gm-strip {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 20;
       display: flex;
       gap: 6px;
-      padding: 0.5rem 1rem 0.75rem;
+      padding: 0.75rem 1rem 1rem;
       overflow-x: auto;
-      flex-shrink: 0;
       justify-content: center;
+      background: linear-gradient(to top, rgba(0,0,0,0.45), rgba(0,0,0,0));
       scrollbar-width: thin;
       scrollbar-color: rgba(184,114,10,0.5) transparent;
     }
@@ -646,7 +664,8 @@
     .gm-strip::-webkit-scrollbar-thumb { background: rgba(184,114,10,0.5); }
 
     .gm-strip-thumb {
-      width: 72px; height: 54px;
+      width: 72px;
+      height: 54px;
       flex-shrink: 0;
       object-fit: cover;
       opacity: 0.45;
@@ -657,6 +676,7 @@
     .gm-strip-thumb:hover { opacity: 0.75; }
     .gm-strip-thumb.active { opacity: 1; border-color: var(--accent); }
 
+    /* VIDEO */
     #video-section { background: var(--bg); }
 
     .video-wrap {
@@ -688,6 +708,7 @@
       border: 0;
     }
 
+    /* BOOK */
     #book {
       background: linear-gradient(135deg, #f7f2eb 0%, #efe6da 100%);
       border-top: 1px solid var(--border);
@@ -713,6 +734,7 @@
       flex-wrap: wrap;
     }
 
+    /* EVENTS */
     #events { background: var(--bg-alt); }
 
     .events-toggle-wrap {
@@ -827,7 +849,7 @@
     .form-group select option { background: #fff; color: #111; }
     .form-group textarea { resize: vertical; min-height: 120px; }
 
-    .form-row   { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
     .form-row-4 { grid-template-columns: repeat(4, 1fr); }
 
     #form-status {
@@ -849,6 +871,7 @@
       color: #8b1c1c;
     }
 
+    /* FOOTER */
     footer {
       background: #f3eee7;
       border-top: 1px solid var(--border);
@@ -942,6 +965,7 @@
       .footer-links { flex-wrap: wrap; justify-content: center; }
     }
 
+    /* FIXED BOOK */
     .fixed-book {
       display: none;
     }
@@ -970,13 +994,14 @@
     }
 
     .video-btn-desktop { display: inline-block; margin-top: 2rem; }
-    #video-mobile-btn  { display: none; }
+    #video-mobile-btn { display: none; }
 
     @media (max-width: 900px) {
       .video-btn-desktop { display: none; }
-      #video-mobile-btn  { display: block; }
+      #video-mobile-btn { display: block; }
     }
 
+    /* RESPONSIVE */
     @media (max-width: 900px) {
       .about-grid { grid-template-columns: 1fr; gap: 3rem; }
       .about-image-stack { height: 320px; }
@@ -995,18 +1020,42 @@
       .video-frame { order: 2; width: 100%; }
       #video-mobile-btn { order: 3; }
 
-      .gm-main { gap: 0.75rem; padding: 0.5rem; }
-      .gm-header { padding: 0.65rem 0.75rem; }
-      .gm-strip { padding: 0.4rem 0.75rem 0.6rem; }
-      #gm-img { max-width: 94vw; max-height: 84vh; }
+      .gm-header {
+        padding: 0.75rem;
+      }
+
+      .gm-title {
+        font-size: 0.55rem;
+        letter-spacing: 0.18em;
+      }
+
+      .gm-counter {
+        font-size: 0.85rem;
+      }
+
+      .gm-img-wrap {
+        padding: 1rem;
+      }
+
+      #gm-img {
+        max-width: 98vw;
+        max-height: 90vh;
+      }
+
+      .gm-nav {
+        width: 44px;
+        height: 44px;
+        font-size: 1.5rem;
+      }
+
+      #gm-prev { left: 0.5rem; }
+      #gm-next { right: 0.5rem; }
     }
 
     @media (max-width: 700px) {
       .gallery-featured-wrap { grid-template-columns: 44px 1fr 44px; gap: 0.5rem; }
       .gallery-arrow { width: 44px; height: 44px; font-size: 1.5rem; }
       .gallery-thumbs { grid-template-columns: repeat(2, 1fr); }
-      .gm-nav { width: 44px; height: 44px; font-size: 1.4rem; }
-      .gm-title { font-size: 0.55rem; letter-spacing: 0.22em; }
     }
 
     @media (max-width: 600px) {
@@ -1020,8 +1069,8 @@
       }
 
       #gm-img {
-        max-width: 96vw;
-        max-height: 82vh;
+        max-width: 98vw;
+        max-height: 94vh;
       }
     }
   </style>
@@ -1035,287 +1084,296 @@
 
   <main id="main-content">
 
-  <section id="hero" aria-label="The Copper Roost — hero">
-    <div class="hero-overlay" aria-hidden="true"></div>
-    <div class="hero-content">
-      <img src="rooster-only.webp" alt="The Copper Roost rooster weathervane logo" class="hero-rooster" id="hero-rooster" width="115" height="115" />
-      <h1 class="hero-title">The Copper Roost</h1>
-      <p class="hero-sub">A Gathering Place &nbsp;·&nbsp; Est. 2021</p>
-      <div class="accent-line" aria-hidden="true"></div>
-      <p class="hero-tagline">Getaway. Relax. Recharge.</p>
-      <div class="hero-btns">
-        <a href="https://evolve.com/vacation-rentals/us/ok/calera/449745?queryID=5a484e678e0f3f04e77c75612ff67ec5"
-           target="_blank" rel="noopener" class="btn-primary"
-           aria-label="Book your stay at The Copper Roost on Evolve">Book Your Stay</a>
-        <a href="#about" class="btn-outline">Explore the Roost</a>
-      </div>
-    </div>
-    <div class="scroll-hint" aria-hidden="true">
-      <span>Scroll</span>
-      <div class="scroll-arrow"></div>
-    </div>
-  </section>
-
-  <section id="about" aria-labelledby="about-heading">
-    <div class="section-inner">
-      <div class="about-grid">
-        <div class="about-text">
-          <p class="section-label">Welcome</p>
-          <h2 id="about-heading" class="section-heading">A Place to <em>Gather</em> & Make Memories</h2>
-          <div class="divider" aria-hidden="true"></div>
-          <p>Specializing in a family-friendly atmosphere, The Copper Roost is a one-of-a-kind barndominium retreat boasting 5,000 sq. ft. of space with something for everyone to enjoy. It's the perfect place to get away with your family or friends.</p>
-          <p>With the ability to sleep up to 16, it's the ideal spot for family vacations, getaways, retreats, and events. This stunning 5-bedroom barndominium features 4.5 bathrooms with 4 of those bathrooms en-suite for maximum comfort and privacy.</p>
-          <div class="stat-row">
-            <div class="stat"><div class="stat-num">5,000</div><div class="stat-label">Sq. Feet</div></div>
-            <div class="stat"><div class="stat-num">16</div><div class="stat-label">Guests</div></div>
-            <div class="stat"><div class="stat-num">5</div><div class="stat-label">Bedrooms</div></div>
-            <div class="stat"><div class="stat-num">4.5</div><div class="stat-label">Bathrooms</div></div>
-          </div>
-        </div>
-        <div class="about-image-stack">
-          <img src="photos/photo-01.jpg" alt="Exterior view of The Copper Roost barndominium vacation rental near Lake Texoma, Oklahoma"
-               class="about-img-main" width="640" height="480"
-               onerror="this.style.background='#e9e1d6';this.removeAttribute('src')" />
-          <img src="photos/photo-02.jpg" alt="Cozy en-suite bedroom inside The Copper Roost"
-               class="about-img-accent" width="400" height="300"
-               onerror="this.style.background='#f3eee7';this.removeAttribute('src')" />
-          <div class="about-badge" aria-hidden="true">Near Lake Texoma</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="amenities" aria-labelledby="amenities-heading">
-    <div class="section-inner">
-      <div class="amenities-intro">
-        <p class="section-label">What Awaits</p>
-        <h2 id="amenities-heading" class="section-heading">Every Detail, <em>Thoughtfully Considered</em></h2>
-        <div class="divider" aria-hidden="true"></div>
-      </div>
-      <div class="amenity-grid" role="list">
-        <div class="amenity-card" role="listitem">
-          <div class="amenity-title">Movie Room</div>
-          <div class="amenity-desc">A dedicated cinematic space to settle in for movie nights with the whole crew.</div>
-        </div>
-        <div class="amenity-card" role="listitem">
-          <div class="amenity-title">Game Room</div>
-          <div class="amenity-desc">Foosball, ping pong, pop-a-shot basketball, and stocked board and card games.</div>
-        </div>
-        <div class="amenity-card" role="listitem">
-          <div class="amenity-title">Renovated Patio</div>
-          <div class="amenity-desc">A newly renovated outdoor patio perfect for morning coffee or evening gatherings.</div>
-        </div>
-        <div class="amenity-card" role="listitem">
-          <div class="amenity-title">5 Bedrooms</div>
-          <div class="amenity-desc">Sleeps up to 16 guests comfortably, with 4 en-suite bathrooms for added privacy.</div>
-        </div>
-        <div class="amenity-card" role="listitem">
-          <div class="amenity-title">Lake Texoma Nearby</div>
-          <div class="amenity-desc">The lake is just 3 miles away, perfect for a quick day trip on the water.</div>
-        </div>
-        <div class="amenity-card" role="listitem">
-          <div class="amenity-title">Choctaw Casino</div>
-          <div class="amenity-desc">Only 7 miles to Choctaw Casino for a night out, plus fantastic local restaurants and wineries.</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="gallery" aria-labelledby="gallery-heading">
-    <div class="section-inner">
-      <div class="gallery-header">
-        <p class="section-label">Photo Gallery</p>
-        <h2 id="gallery-heading" class="section-heading" style="margin-bottom:0">See the <em>Space</em></h2>
-      </div>
-
-      <div class="gallery-featured-wrap">
-        <button class="gallery-arrow" id="gallery-prev" aria-label="Previous photo">&#x2039;</button>
-        <div class="gallery-featured" id="gallery-featured" role="img" aria-label="Featured property photo">
-          <img id="featured-image" src="" alt="Featured photo of The Copper Roost" />
-          <div class="gallery-zoom-hint" aria-hidden="true">View larger</div>
-        </div>
-        <button class="gallery-arrow" id="gallery-next" aria-label="Next photo">&#x203a;</button>
-      </div>
-
-      <div class="gallery-thumbs" id="gallery-thumbs" role="list" aria-label="Photo thumbnails"></div>
-
-      <div class="gallery-actions">
-        <button class="btn-outline" id="open-all-photos" type="button">View All Photos</button>
-      </div>
-    </div>
-  </section>
-
-  <div id="gallery-modal" role="dialog" aria-modal="true" aria-label="Full photo gallery — use arrow keys to navigate">
-    <div class="gm-header">
-      <span class="gm-title">The Copper Roost &nbsp;·&nbsp; Gallery</span>
-      <span class="gm-counter" id="gm-counter" aria-live="polite"></span>
-      <button class="gm-close" id="gm-close" aria-label="Close gallery">&#x2715;</button>
-    </div>
-    <div class="gm-main">
-      <button class="gm-nav" id="gm-prev" aria-label="Previous photo">&#x2039;</button>
-      <div class="gm-img-wrap">
-        <img id="gm-img" src="" alt="" />
-      </div>
-      <button class="gm-nav" id="gm-next" aria-label="Next photo">&#x203a;</button>
-    </div>
-    <div class="gm-strip" id="gm-strip" role="list" aria-label="All photos"></div>
-  </div>
-
-  <section id="video-section" aria-labelledby="video-heading">
-    <div class="section-inner">
-      <div class="video-wrap">
-        <div class="video-text">
-          <p class="section-label">Take a Tour</p>
-          <h2 id="video-heading" class="section-heading">See the Roost <em>Come to Life</em></h2>
-          <div class="divider" aria-hidden="true"></div>
-          <p>Watch our full property tour and get a feel for every corner of The Copper Roost — from the grand barndominium interior to the surrounding landscape and renovated patio spaces.</p>
-          <a href="https://evolve.com/vacation-rentals/us/ok/calera/449745?queryID=5a484e678e0f3f04e77c75612ff67ec5"
-             target="_blank" rel="noopener" class="btn-primary video-btn-desktop">Book Your Stay</a>
-        </div>
-
-        <div class="video-frame">
-          <iframe
-            src="https://www.youtube.com/embed/UV-YWdOuRB4"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen
-            title="The Copper Roost barndominium vacation rental property tour — near Lake Texoma, Oklahoma">
-          </iframe>
-        </div>
-      </div>
-
-      <div id="video-mobile-btn" style="margin-top:2rem;text-align:center;">
-        <a href="https://evolve.com/vacation-rentals/us/ok/calera/449745?queryID=5a484e678e0f3f04e77c75612ff67ec5"
-           target="_blank" rel="noopener" class="btn-primary">Book Your Stay</a>
-      </div>
-    </div>
-  </section>
-
-  <section id="book" aria-labelledby="book-heading">
-    <div class="section-inner">
-      <div class="book-inner">
-        <p class="section-label">Reserve Your Dates</p>
-        <h2 id="book-heading" class="section-heading">Ready to <em>Gather?</em></h2>
-        <div class="divider" style="margin:0 auto 2rem;" aria-hidden="true"></div>
-        <p>We are happy to share our special getaway with you and truly hope you enjoy it as much as we do. Spectacular sunrises and sunsets, the lake just 3 miles away, and more than enough to keep everyone entertained. We look forward to hosting you.</p>
-        <div class="book-btns">
+    <!-- HERO -->
+    <section id="hero" aria-label="The Copper Roost hero">
+      <div class="hero-overlay" aria-hidden="true"></div>
+      <div class="hero-content">
+        <img src="rooster-only.webp" alt="The Copper Roost rooster weathervane logo" class="hero-rooster" id="hero-rooster" width="115" height="115" />
+        <h1 class="hero-title">The Copper Roost</h1>
+        <p class="hero-sub">A Gathering Place &nbsp;·&nbsp; Est. 2021</p>
+        <div class="accent-line" aria-hidden="true"></div>
+        <p class="hero-tagline">Getaway. Relax. Recharge.</p>
+        <div class="hero-btns">
           <a href="https://evolve.com/vacation-rentals/us/ok/calera/449745?queryID=5a484e678e0f3f04e77c75612ff67ec5"
              target="_blank" rel="noopener" class="btn-primary"
-             aria-label="Book your stay at The Copper Roost on Evolve">Book Now on Evolve</a>
-          <a href="https://evolve.com/vacation-rentals/us/ok/calera/449745?queryID=5a484e678e0f3f04e77c75612ff67ec5"
-             target="_blank" rel="noopener" class="btn-outline"
-             aria-label="Write a review for The Copper Roost on Evolve">Write a Review</a>
-          <a href="http://www.facebook.com/TheCopperRoost"
-             target="_blank" rel="noopener" class="btn-outline"
-             aria-label="Visit The Copper Roost on Facebook">Facebook</a>
+             aria-label="Book your stay at The Copper Roost on Evolve">Book Your Stay</a>
+          <a href="#about" class="btn-outline">Explore the Roost</a>
         </div>
       </div>
-    </div>
-  </section>
-
-  <section id="events" aria-labelledby="events-heading">
-    <div class="section-inner">
-
-      <div style="text-align:center;max-width:620px;margin:0 auto;">
-        <p class="section-label">Host Your Event</p>
-        <h2 id="events-heading" class="section-heading">Planning Something <em>Special?</em></h2>
-        <div class="divider" style="margin:0 auto 1.5rem;" aria-hidden="true"></div>
-        <p style="color:#3d3730;line-height:1.9;margin-bottom:2rem;">
-          Whether you're planning a milestone birthday, a family reunion, a corporate retreat, or any other special occasion, The Copper Roost offers the space, amenities, and atmosphere to make it unforgettable. Fill out the form below and we'll be in touch to help you plan every detail.
-        </p>
+      <div class="scroll-hint" aria-hidden="true">
+        <span>Scroll</span>
+        <div class="scroll-arrow"></div>
       </div>
+    </section>
 
-      <div class="events-toggle-wrap">
-        <button class="events-toggle-btn" id="events-toggle" type="button" aria-expanded="false" aria-controls="events-collapsible">
-          <span>Request Event Info</span>
-          <span class="events-toggle-icon" aria-hidden="true">
-            <svg width="14" height="9" viewBox="0 0 14 9" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M1 1L7 7.5L13 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </span>
-        </button>
-      </div>
-
-      <div class="events-collapsible" id="events-collapsible" aria-hidden="true">
-        <div class="event-grid">
-          <div class="event-info">
-            <p class="event-info-intro">
-              The Copper Roost sits just outside Calera, Oklahoma, minutes from Lake Texoma and Choctaw Casino. With 5,000 square feet of beautifully designed space, it's one of the most versatile private event venues in southern Oklahoma — with the warmth and character of a true family home.
-            </p>
-            <div class="event-detail">
-              <p class="event-detail-text">Located near Calera, Oklahoma — minutes from Lake Texoma and Choctaw Casino</p>
-            </div>
-            <div class="event-detail">
-              <p class="event-detail-text">Up to 16 overnight guests, plus additional day-event capacity for larger gatherings</p>
-            </div>
-            <div class="event-detail">
-              <p class="event-detail-text">Family reunions, milestone birthdays, bachelorette weekends, corporate retreats, and more</p>
+    <!-- ABOUT -->
+    <section id="about" aria-labelledby="about-heading">
+      <div class="section-inner">
+        <div class="about-grid">
+          <div class="about-text">
+            <p class="section-label">Welcome</p>
+            <h2 id="about-heading" class="section-heading">A Place to <em>Gather</em> & Make Memories</h2>
+            <div class="divider" aria-hidden="true"></div>
+            <p>Specializing in a family-friendly atmosphere, The Copper Roost is a one-of-a-kind barndominium retreat boasting 5,000 sq. ft. of space with something for everyone to enjoy. It's the perfect place to get away with your family or friends.</p>
+            <p>With the ability to sleep up to 16, it's the ideal spot for family vacations, getaways, retreats, and events. This stunning 5-bedroom barndominium features 4.5 bathrooms with 4 of those bathrooms en-suite for maximum comfort and privacy.</p>
+            <div class="stat-row">
+              <div class="stat"><div class="stat-num">5,000</div><div class="stat-label">Sq. Feet</div></div>
+              <div class="stat"><div class="stat-num">16</div><div class="stat-label">Guests</div></div>
+              <div class="stat"><div class="stat-num">5</div><div class="stat-label">Bedrooms</div></div>
+              <div class="stat"><div class="stat-num">4.5</div><div class="stat-label">Bathrooms</div></div>
             </div>
           </div>
-
-          <form id="event-form" novalidate aria-label="Event request form">
-            <div class="form-row">
-              <div class="form-group">
-                <label for="fname">First Name <span aria-hidden="true">*</span><span class="sr-only">(required)</span></label>
-                <input type="text" id="fname" name="first_name" required autocomplete="given-name" />
-              </div>
-              <div class="form-group">
-                <label for="lname">Last Name <span aria-hidden="true">*</span><span class="sr-only">(required)</span></label>
-                <input type="text" id="lname" name="last_name" required autocomplete="family-name" />
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-group">
-                <label for="phone">Phone <span aria-hidden="true">*</span><span class="sr-only">(required)</span></label>
-                <input type="tel" id="phone" name="phone" required autocomplete="tel" />
-              </div>
-              <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" autocomplete="email" />
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="event-type">Type of Event <span aria-hidden="true">*</span><span class="sr-only">(required)</span></label>
-              <input type="text" id="event-type" name="event_type" required placeholder="e.g. Family Reunion, Birthday, Retreat…" />
-            </div>
-            <div class="form-group">
-              <label for="attending">Estimated Attendance <span aria-hidden="true">*</span><span class="sr-only">(required)</span></label>
-              <input type="number" id="attending" name="estimated_attending" min="1" required />
-            </div>
-            <div class="form-row form-row-4">
-              <div class="form-group">
-                <label for="start-date">Start Date <span aria-hidden="true">*</span><span class="sr-only">(required)</span></label>
-                <input type="date" id="start-date" name="start_date" required />
-              </div>
-              <div class="form-group">
-                <label for="start-time">Start Time <span aria-hidden="true">*</span><span class="sr-only">(required)</span></label>
-                <input type="time" id="start-time" name="start_time" required />
-              </div>
-              <div class="form-group">
-                <label for="end-date">End Date <span aria-hidden="true">*</span><span class="sr-only">(required)</span></label>
-                <input type="date" id="end-date" name="end_date" required />
-              </div>
-              <div class="form-group">
-                <label for="end-time">End Time <span aria-hidden="true">*</span><span class="sr-only">(required)</span></label>
-                <input type="time" id="end-time" name="end_time" required />
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="message">Additional Details <span aria-hidden="true">*</span><span class="sr-only">(required)</span></label>
-              <textarea id="message" name="message" required
-                placeholder="Tell us about your event, setup needs, questions, and any special requests."></textarea>
-            </div>
-            <button type="submit" class="btn-primary" style="width:100%;">Submit Request</button>
-            <div id="form-status" role="alert"></div>
-          </form>
+          <div class="about-image-stack">
+            <img src="photos/photo-01.jpg" alt="Exterior view of The Copper Roost barndominium vacation rental near Lake Texoma, Oklahoma"
+                 class="about-img-main" width="640" height="480"
+                 onerror="this.style.background='#e9e1d6';this.removeAttribute('src')" />
+            <img src="photos/photo-02.jpg" alt="Cozy en-suite bedroom inside The Copper Roost"
+                 class="about-img-accent" width="400" height="300"
+                 onerror="this.style.background='#f3eee7';this.removeAttribute('src')" />
+            <div class="about-badge" aria-hidden="true">Near Lake Texoma</div>
+          </div>
         </div>
       </div>
+    </section>
 
+    <!-- AMENITIES -->
+    <section id="amenities" aria-labelledby="amenities-heading">
+      <div class="section-inner">
+        <div class="amenities-intro">
+          <p class="section-label">What Awaits</p>
+          <h2 id="amenities-heading" class="section-heading">Every Detail, <em>Thoughtfully Considered</em></h2>
+          <div class="divider" aria-hidden="true"></div>
+        </div>
+        <div class="amenity-grid" role="list">
+          <div class="amenity-card" role="listitem">
+            <div class="amenity-title">Movie Room</div>
+            <div class="amenity-desc">A dedicated cinematic space to settle in for movie nights with the whole crew.</div>
+          </div>
+          <div class="amenity-card" role="listitem">
+            <div class="amenity-title">Game Room</div>
+            <div class="amenity-desc">Foosball, ping pong, pop-a-shot basketball, and stocked board and card games.</div>
+          </div>
+          <div class="amenity-card" role="listitem">
+            <div class="amenity-title">Renovated Patio</div>
+            <div class="amenity-desc">A newly renovated outdoor patio perfect for morning coffee or evening gatherings.</div>
+          </div>
+          <div class="amenity-card" role="listitem">
+            <div class="amenity-title">5 Bedrooms</div>
+            <div class="amenity-desc">Sleeps up to 16 guests comfortably, with 4 en-suite bathrooms for added privacy.</div>
+          </div>
+          <div class="amenity-card" role="listitem">
+            <div class="amenity-title">Lake Texoma Nearby</div>
+            <div class="amenity-desc">The lake is just 3 miles away, perfect for a quick day trip on the water.</div>
+          </div>
+          <div class="amenity-card" role="listitem">
+            <div class="amenity-title">Choctaw Casino</div>
+            <div class="amenity-desc">Only 7 miles to Choctaw Casino for a night out, plus fantastic local restaurants and wineries.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- GALLERY -->
+    <section id="gallery" aria-labelledby="gallery-heading">
+      <div class="section-inner">
+        <div class="gallery-header">
+          <p class="section-label">Photo Gallery</p>
+          <h2 id="gallery-heading" class="section-heading" style="margin-bottom:0">See the <em>Space</em></h2>
+        </div>
+
+        <div class="gallery-featured-wrap">
+          <button class="gallery-arrow" id="gallery-prev" aria-label="Previous photo">&#x2039;</button>
+          <div class="gallery-featured" id="gallery-featured" role="img" aria-label="Featured property photo">
+            <img id="featured-image" src="" alt="Featured photo of The Copper Roost" />
+            <div class="gallery-zoom-hint" aria-hidden="true">View larger</div>
+          </div>
+          <button class="gallery-arrow" id="gallery-next" aria-label="Next photo">&#x203a;</button>
+        </div>
+
+        <div class="gallery-thumbs" id="gallery-thumbs" role="list" aria-label="Photo thumbnails"></div>
+
+        <div class="gallery-actions">
+          <button class="btn-outline" id="open-all-photos" type="button">View All Photos</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- GALLERY MODAL -->
+    <div id="gallery-modal" role="dialog" aria-modal="true" aria-label="Full photo gallery - use arrow keys to navigate">
+      <div class="gm-header">
+        <span class="gm-title">The Copper Roost &nbsp;·&nbsp; Gallery</span>
+        <span class="gm-counter" id="gm-counter" aria-live="polite"></span>
+        <button class="gm-close" id="gm-close" aria-label="Close gallery">&#x2715;</button>
+      </div>
+      <div class="gm-main">
+        <button class="gm-nav" id="gm-prev" aria-label="Previous photo">&#x2039;</button>
+        <div class="gm-img-wrap">
+          <img id="gm-img" src="" alt="" />
+        </div>
+        <button class="gm-nav" id="gm-next" aria-label="Next photo">&#x203a;</button>
+      </div>
+      <div class="gm-strip" id="gm-strip" role="list" aria-label="All photos"></div>
     </div>
-  </section>
+
+    <!-- VIDEO -->
+    <section id="video-section" aria-labelledby="video-heading">
+      <div class="section-inner">
+        <div class="video-wrap">
+          <div class="video-text">
+            <p class="section-label">Take a Tour</p>
+            <h2 id="video-heading" class="section-heading">See the Roost <em>Come to Life</em></h2>
+            <div class="divider" aria-hidden="true"></div>
+            <p>Watch our full property tour and get a feel for every corner of The Copper Roost - from the grand barndominium interior to the surrounding landscape and renovated patio spaces.</p>
+            <a href="https://evolve.com/vacation-rentals/us/ok/calera/449745?queryID=5a484e678e0f3f04e77c75612ff67ec5"
+               target="_blank" rel="noopener" class="btn-primary video-btn-desktop">Book Your Stay</a>
+          </div>
+
+          <div class="video-frame">
+            <iframe
+              src="https://www.youtube.com/embed/UV-YWdOuRB4"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+              title="The Copper Roost barndominium vacation rental property tour near Lake Texoma, Oklahoma">
+            </iframe>
+          </div>
+        </div>
+
+        <div id="video-mobile-btn" style="margin-top:2rem;text-align:center;">
+          <a href="https://evolve.com/vacation-rentals/us/ok/calera/449745?queryID=5a484e678e0f3f04e77c75612ff67ec5"
+             target="_blank" rel="noopener" class="btn-primary">Book Your Stay</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- BOOK -->
+    <section id="book" aria-labelledby="book-heading">
+      <div class="section-inner">
+        <div class="book-inner">
+          <p class="section-label">Reserve Your Dates</p>
+          <h2 id="book-heading" class="section-heading">Ready to <em>Gather?</em></h2>
+          <div class="divider" style="margin:0 auto 2rem;" aria-hidden="true"></div>
+          <p>We are happy to share our special getaway with you and truly hope you enjoy it as much as we do. Spectacular sunrises and sunsets, the lake just 3 miles away, and more than enough to keep everyone entertained. We look forward to hosting you.</p>
+          <div class="book-btns">
+            <a href="https://evolve.com/vacation-rentals/us/ok/calera/449745?queryID=5a484e678e0f3f04e77c75612ff67ec5"
+               target="_blank" rel="noopener" class="btn-primary"
+               aria-label="Book your stay at The Copper Roost on Evolve">Book Now on Evolve</a>
+            <a href="https://evolve.com/vacation-rentals/us/ok/calera/449745?queryID=5a484e678e0f3f04e77c75612ff67ec5"
+               target="_blank" rel="noopener" class="btn-outline"
+               aria-label="Write a review for The Copper Roost on Evolve">Write a Review</a>
+            <a href="http://www.facebook.com/TheCopperRoost"
+               target="_blank" rel="noopener" class="btn-outline"
+               aria-label="Visit The Copper Roost on Facebook">Facebook</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- EVENTS -->
+    <section id="events" aria-labelledby="events-heading">
+      <div class="section-inner">
+
+        <div style="text-align:center;max-width:620px;margin:0 auto;">
+          <p class="section-label">Host Your Event</p>
+          <h2 id="events-heading" class="section-heading">Planning Something <em>Special?</em></h2>
+          <div class="divider" style="margin:0 auto 1.5rem;" aria-hidden="true"></div>
+          <p style="color:#3d3730;line-height:1.9;margin-bottom:2rem;">
+            Whether you're planning a milestone birthday, a family reunion, a corporate retreat, or any other special occasion, The Copper Roost offers the space, amenities, and atmosphere to make it unforgettable. Fill out the form below and we'll be in touch to help you plan every detail.
+          </p>
+        </div>
+
+        <div class="events-toggle-wrap">
+          <button class="events-toggle-btn" id="events-toggle" type="button" aria-expanded="false" aria-controls="events-collapsible">
+            <span>Request Event Info</span>
+            <span class="events-toggle-icon" aria-hidden="true">
+              <svg width="14" height="9" viewBox="0 0 14 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1 1L7 7.5L13 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+          </button>
+        </div>
+
+        <div class="events-collapsible" id="events-collapsible" aria-hidden="true">
+          <div class="event-grid">
+            <div class="event-info">
+              <p class="event-info-intro">
+                The Copper Roost sits just outside Calera, Oklahoma, minutes from Lake Texoma and Choctaw Casino. With 5,000 square feet of beautifully designed space, it's one of the most versatile private event venues in southern Oklahoma - with the warmth and character of a true family home.
+              </p>
+              <div class="event-detail">
+                <p class="event-detail-text">Located near Calera, Oklahoma - minutes from Lake Texoma and Choctaw Casino</p>
+              </div>
+              <div class="event-detail">
+                <p class="event-detail-text">Up to 16 overnight guests, plus additional day-event capacity for larger gatherings</p>
+              </div>
+              <div class="event-detail">
+                <p class="event-detail-text">Family reunions, milestone birthdays, bachelorette weekends, corporate retreats, and more</p>
+              </div>
+            </div>
+
+            <form id="event-form" novalidate aria-label="Event request form">
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="fname">First Name <span aria-hidden="true">*</span><span class="sr-only">(required)</span></label>
+                  <input type="text" id="fname" name="first_name" required autocomplete="given-name" />
+                </div>
+                <div class="form-group">
+                  <label for="lname">Last Name <span aria-hidden="true">*</span><span class="sr-only">(required)</span></label>
+                  <input type="text" id="lname" name="last_name" required autocomplete="family-name" />
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="phone">Phone <span aria-hidden="true">*</span><span class="sr-only">(required)</span></label>
+                  <input type="tel" id="phone" name="phone" required autocomplete="tel" />
+                </div>
+                <div class="form-group">
+                  <label for="email">Email</label>
+                  <input type="email" id="email" name="email" autocomplete="email" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="event-type">Type of Event <span aria-hidden="true">*</span><span class="sr-only">(required)</span></label>
+                <input type="text" id="event-type" name="event_type" required placeholder="e.g. Family Reunion, Birthday, Retreat..." />
+              </div>
+              <div class="form-group">
+                <label for="attending">Estimated Attendance <span aria-hidden="true">*</span><span class="sr-only">(required)</span></label>
+                <input type="number" id="attending" name="estimated_attending" min="1" required />
+              </div>
+              <div class="form-row form-row-4">
+                <div class="form-group">
+                  <label for="start-date">Start Date <span aria-hidden="true">*</span><span class="sr-only">(required)</span></label>
+                  <input type="date" id="start-date" name="start_date" required />
+                </div>
+                <div class="form-group">
+                  <label for="start-time">Start Time <span aria-hidden="true">*</span><span class="sr-only">(required)</span></label>
+                  <input type="time" id="start-time" name="start_time" required />
+                </div>
+                <div class="form-group">
+                  <label for="end-date">End Date <span aria-hidden="true">*</span><span class="sr-only">(required)</span></label>
+                  <input type="date" id="end-date" name="end_date" required />
+                </div>
+                <div class="form-group">
+                  <label for="end-time">End Time <span aria-hidden="true">*</span><span class="sr-only">(required)</span></label>
+                  <input type="time" id="end-time" name="end_time" required />
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="message">Additional Details <span aria-hidden="true">*</span><span class="sr-only">(required)</span></label>
+                <textarea id="message" name="message" required
+                  placeholder="Tell us about your event, setup needs, questions, and any special requests."></textarea>
+              </div>
+              <button type="submit" class="btn-primary" style="width:100%;">Submit Request</button>
+              <div id="form-status" role="alert"></div>
+            </form>
+          </div>
+        </div>
+
+      </div>
+    </section>
 
   </main>
 
+  <!-- FOOTER -->
   <footer>
     <img src="rooster.png" alt="" class="footer-rooster" aria-hidden="true" />
 
@@ -1342,7 +1400,7 @@
       </a>
     </div>
 
-    <div class="footer-legal">© <span id="footer-year">2025</span> The Copper Roost. All rights reserved. Est. 2021 — Calera, Oklahoma.</div>
+    <div class="footer-legal">© <span id="footer-year">2025</span> The Copper Roost. All rights reserved. Est. 2021 - Calera, Oklahoma.</div>
   </footer>
 
   <style>
@@ -1356,13 +1414,15 @@
   </style>
 
   <script>
+    // AUTO YEAR
     document.getElementById('footer-year').textContent = new Date().getFullYear();
 
+    // GALLERY
     const galleryThumbsEl = document.getElementById('gallery-thumbs');
-    const featuredImage   = document.getElementById('featured-image');
-    const featuredWrap    = document.getElementById('gallery-featured');
+    const featuredImage = document.getElementById('featured-image');
+    const featuredWrap = document.getElementById('gallery-featured');
     let galleryImages = [];
-    let currentIndex  = 0;
+    let currentIndex = 0;
 
     async function loadGallery() {
       try {
@@ -1377,7 +1437,7 @@
         galleryThumbsEl.innerHTML = `
           <div class="gallery-empty" style="grid-column:1/-1;padding:2rem 0;">
             <span style="font-size:2rem;opacity:0.35" aria-hidden="true">📷</span>
-            <span>Photos coming soon — add images to <code>photos/</code> and update <code>manifest.json</code></span>
+            <span>Photos coming soon - add images to <code>photos/</code> and update <code>manifest.json</code></span>
           </div>`;
         featuredWrap.innerHTML = `
           <div class="gallery-empty" style="width:100%;height:100%;">
@@ -1389,10 +1449,11 @@
 
     function renderFeaturedGallery() {
       featuredImage.src = galleryImages[currentIndex];
-      featuredImage.alt = `The Copper Roost barndominium — photo ${currentIndex + 1} of ${galleryImages.length}`;
+      featuredImage.alt = `The Copper Roost barndominium - photo ${currentIndex + 1} of ${galleryImages.length}`;
 
       galleryThumbsEl.innerHTML = '';
       const thumbsToShow = galleryImages.slice(0, 4);
+
       thumbsToShow.forEach((src, i) => {
         const btn = document.createElement('button');
         btn.type = 'button';
@@ -1401,7 +1462,10 @@
         btn.setAttribute('aria-label', `View photo ${i + 1}${i === currentIndex ? ' (currently shown)' : ''}`);
         btn.setAttribute('aria-pressed', i === currentIndex ? 'true' : 'false');
         btn.innerHTML = `<img src="${src}" alt="" loading="lazy" />`;
-        btn.addEventListener('click', () => { currentIndex = i; renderFeaturedGallery(); });
+        btn.addEventListener('click', () => {
+          currentIndex = i;
+          renderFeaturedGallery();
+        });
         galleryThumbsEl.appendChild(btn);
       });
     }
@@ -1428,13 +1492,12 @@
       openModal(0);
     });
 
-    loadGallery();
-
-    const modal     = document.getElementById('gallery-modal');
-    const gmImg     = document.getElementById('gm-img');
-    const gmStrip   = document.getElementById('gm-strip');
+    // MODAL
+    const modal = document.getElementById('gallery-modal');
+    const gmImg = document.getElementById('gm-img');
+    const gmStrip = document.getElementById('gm-strip');
     const gmCounter = document.getElementById('gm-counter');
-    let modalIndex  = 0;
+    let modalIndex = 0;
     let lastFocused = null;
 
     function buildModalStrip() {
@@ -1458,22 +1521,32 @@
       });
     }
 
+    function updateModalThumbs(index, smooth = true) {
+      const thumbs = gmStrip.querySelectorAll('.gm-strip-thumb');
+      thumbs.forEach((t, i) => {
+        t.classList.toggle('active', i === index);
+        if (i === index) {
+          t.scrollIntoView({
+            behavior: smooth ? 'smooth' : 'auto',
+            block: 'nearest',
+            inline: 'center'
+          });
+        }
+      });
+    }
+
     function goToModal(index) {
       modalIndex = index;
       gmImg.classList.add('fading');
 
       setTimeout(() => {
         gmImg.src = galleryImages[index];
-        gmImg.alt = `The Copper Roost — photo ${index + 1} of ${galleryImages.length}`;
+        gmImg.alt = `The Copper Roost - photo ${index + 1} of ${galleryImages.length}`;
         gmImg.classList.remove('fading');
       }, 150);
 
       gmCounter.textContent = `${index + 1} / ${galleryImages.length}`;
-      const thumbs = gmStrip.querySelectorAll('.gm-strip-thumb');
-      thumbs.forEach((t, i) => {
-        t.classList.toggle('active', i === index);
-        if (i === index) t.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-      });
+      updateModalThumbs(index, true);
     }
 
     function openModal(index) {
@@ -1482,13 +1555,9 @@
       document.body.style.overflow = 'hidden';
       modalIndex = index;
       gmImg.src = galleryImages[index];
-      gmImg.alt = `The Copper Roost — photo ${index + 1} of ${galleryImages.length}`;
+      gmImg.alt = `The Copper Roost - photo ${index + 1} of ${galleryImages.length}`;
       gmCounter.textContent = `${index + 1} / ${galleryImages.length}`;
-      const thumbs = gmStrip.querySelectorAll('.gm-strip-thumb');
-      thumbs.forEach((t, i) => {
-        t.classList.toggle('active', i === index);
-        if (i === index) t.scrollIntoView({ block: 'nearest', inline: 'center' });
-      });
+      updateModalThumbs(index, false);
       document.getElementById('gm-close').focus();
     }
 
@@ -1499,11 +1568,19 @@
     }
 
     document.getElementById('gm-close').addEventListener('click', closeModal);
-    modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
-    document.getElementById('gm-prev').addEventListener('click', () =>
-      goToModal((modalIndex - 1 + galleryImages.length) % galleryImages.length));
-    document.getElementById('gm-next').addEventListener('click', () =>
-      goToModal((modalIndex + 1) % galleryImages.length));
+    modal.addEventListener('click', e => {
+      if (e.target === modal) closeModal();
+    });
+
+    document.getElementById('gm-prev').addEventListener('click', () => {
+      if (!galleryImages.length) return;
+      goToModal((modalIndex - 1 + galleryImages.length) % galleryImages.length);
+    });
+
+    document.getElementById('gm-next').addEventListener('click', () => {
+      if (!galleryImages.length) return;
+      goToModal((modalIndex + 1) % galleryImages.length);
+    });
 
     document.addEventListener('keydown', e => {
       if (!modal.classList.contains('open')) return;
@@ -1512,7 +1589,10 @@
       if (e.key === 'ArrowRight') goToModal((modalIndex + 1) % galleryImages.length);
     });
 
-    const toggleBtn   = document.getElementById('events-toggle');
+    loadGallery();
+
+    // EVENTS COLLAPSIBLE
+    const toggleBtn = document.getElementById('events-toggle');
     const collapsible = document.getElementById('events-collapsible');
 
     toggleBtn.addEventListener('click', () => {
@@ -1526,13 +1606,14 @@
       }
     });
 
+    // EVENT FORM
     const FORMSPREE_ENDPOINT = 'https://formspree.io/f/YOUR_FORMSPREE_ID';
 
     document.getElementById('event-form').addEventListener('submit', async function(e) {
       e.preventDefault();
-      const btn    = this.querySelector('button[type="submit"]');
+      const btn = this.querySelector('button[type="submit"]');
       const status = document.getElementById('form-status');
-      btn.textContent = 'Sending…';
+      btn.textContent = 'Sending...';
       btn.disabled = true;
       try {
         const res = await fetch(FORMSPREE_ENDPOINT, {
@@ -1555,6 +1636,7 @@
       btn.disabled = false;
     });
 
+    // HERO LOGO FALLBACK
     document.getElementById('hero-rooster').addEventListener('error', function() {
       this.style.display = 'none';
     });
