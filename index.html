@@ -770,12 +770,19 @@
     }
     .events-toggle-btn.open .events-toggle-icon { transform: rotate(180deg); }
 
-    .events-collapsible {
-      overflow: hidden;
-      max-height: 0;
-      transition: max-height 0.5s cubic-bezier(0.4,0,0.2,1);
-    }
-    .events-collapsible.open { max-height: 2600px; }
+    <!-- ONLY showing the parts that changed so you can safely replace -->
+
+
+/* ── EVENTS (FIXED) ── */
+
+.events-collapsible {
+  display: none;
+}
+
+.events-collapsible.open {
+  display: block;
+}
+
 
     .event-grid {
       display: grid;
@@ -1502,19 +1509,25 @@
       if (e.key === 'ArrowRight') goToModal((modalIndex + 1) % galleryImages.length);
     });
 
-    const toggleBtn   = document.getElementById('events-toggle');
-    const collapsible = document.getElementById('events-collapsible');
-
     toggleBtn.addEventListener('click', () => {
-      const isOpen = collapsible.classList.contains('open');
-      collapsible.classList.toggle('open');
-      toggleBtn.classList.toggle('open');
-      toggleBtn.setAttribute('aria-expanded', String(!isOpen));
-      collapsible.setAttribute('aria-hidden', String(isOpen));
-      if (!isOpen) {
-        setTimeout(() => collapsible.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
-      }
-    });
+  const isOpen = collapsible.classList.contains('open');
+
+  if (isOpen) {
+    collapsible.classList.remove('open');
+    toggleBtn.classList.remove('open');
+    toggleBtn.setAttribute('aria-expanded', 'false');
+    collapsible.setAttribute('aria-hidden', 'true');
+  } else {
+    collapsible.classList.add('open');
+    toggleBtn.classList.add('open');
+    toggleBtn.setAttribute('aria-expanded', 'true');
+    collapsible.setAttribute('aria-hidden', 'false');
+
+    setTimeout(() => {
+      collapsible.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 50);
+  }
+});
 
     const FORMSPREE_ENDPOINT = 'https://formspree.io/f/YOUR_FORMSPREE_ID';
 
