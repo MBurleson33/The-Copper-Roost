@@ -82,9 +82,10 @@
 
     html {
       scroll-behavior: smooth;
-      /* overflow-x: clip prevents horizontal scroll without creating a new scroll context,
-         avoiding the double-scrollbar bug on desktop while still fixing iOS Safari */
       overflow-x: clip;
+      /* Match body background so no gap shows if html is taller than body */
+      background: #f3eee7; /* same as footer bg — what's visible at the very bottom */
+      height: 100%;
     }
 
     body {
@@ -93,7 +94,13 @@
       color: var(--text);
       font-family: 'Lato', sans-serif;
       font-weight: 300;
+      min-height: 100%;
+      display: flex;
+      flex-direction: column;
     }
+
+    /* Make main fill remaining space so footer stays at bottom */
+    main { flex: 1; }
 
     /* Skip-to-content for keyboard / screen readers */
     .skip-link {
@@ -973,33 +980,28 @@
     }
 
     /* ── FIXED BOOK ── */
-    /* Hidden on mobile, positioned higher on desktop */
-    .fixed-book {
-      display: none;   /* hidden by default; shown on desktop via media query below */
-    }
+    .fixed-book { display: none; }
 
     @media (min-width: 901px) {
       .fixed-book {
         display: block;
         position: fixed;
-        /* Anchor the right edge of the (rotated) element flush with the viewport edge.
-           After rotating 90deg, the element's "width" becomes its height in layout space.
-           We use right:0 + transform-origin:right center so the right side stays pinned. */
         right: 0;
         top: 22%;
-        transform: rotate(90deg);
-        transform-origin: right center;
+        writing-mode: vertical-rl;
+        text-orientation: mixed;
         background: #B8720A;
         color: #fff;
         font-family: 'Cinzel', serif;
         font-size: 0.6rem;
         letter-spacing: 0.25em;
         text-transform: uppercase;
-        padding: 0.75rem 1.4rem;
+        padding: 0.9rem 0.6rem;
         text-decoration: none;
         z-index: 500;
         transition: background 0.3s;
         white-space: nowrap;
+        line-height: 1;
       }
       .fixed-book:hover { background: #9a5f08; }
       .fixed-book:focus-visible { outline: 3px solid #1a1a1a; outline-offset: 2px; }
