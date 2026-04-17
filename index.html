@@ -863,22 +863,26 @@
 
     /* FIXED BOOK */
     .fixed-book {
-      position: fixed;
-      right: -26px;
-      top: 50%;
-      transform: translateY(-50%) rotate(90deg);
-      transform-origin: center;
-      background: var(--accent);
-      color: #fff;
-      font-family: 'Cinzel', serif;
-      font-size: 0.6rem;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      padding: 0.75rem 1.2rem;
-      text-decoration: none;
-      z-index: 500;
-      transition: background 0.3s;
-    }
+  position: fixed;
+  right: -18px;
+  top: 33%;
+  transform: translateY(-50%) rotate(90deg);
+  transform-origin: center;
+  background: var(--accent);
+  color: #fff;
+  font-family: 'Cinzel', serif;
+  font-size: 0.6rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  padding: 0.75rem 1.2rem;
+  text-decoration: none;
+  z-index: 500;
+  transition: background 0.3s;
+}
+
+.fixed-book:hover {
+  background: var(--accent-soft);
+}
 
     .fixed-book:hover {
       background: var(--accent-soft);
