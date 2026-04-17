@@ -616,6 +616,12 @@
       height: 100%;
     }
 
+    .video-mobile-button {
+      display: none;
+      margin-top: 2rem;
+      text-align: center;
+    }
+
     /* BOOK */
     #book {
       background: linear-gradient(135deg, #f7f2eb 0%, #efe6da 100%);
@@ -647,50 +653,86 @@
       background: var(--bg-alt);
     }
 
+    .events-toggle-wrap {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .events-toggle-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: transparent;
+      color: var(--text);
+      font-family: 'Cinzel', serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 1rem 2.5rem;
+      border: 1px solid rgba(26,26,26,0.35);
+      cursor: pointer;
+      transition: border-color 0.3s, color 0.3s, background 0.2s;
+      min-height: 44px;
+    }
+
+    .events-toggle-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: rgba(184,114,10,0.05);
+    }
+
+    .events-toggle-btn.open {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: rgba(184,114,10,0.06);
+    }
+
+    .events-toggle-icon {
+      display: inline-flex;
+      align-items: center;
+      transition: transform 0.35s ease;
+      flex-shrink: 0;
+    }
+
+    .events-toggle-btn.open .events-toggle-icon {
+      transform: rotate(180deg);
+    }
+
+    .events-collapsible {
+      overflow: hidden;
+      max-height: 0;
+      transition: max-height 0.5s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    .events-collapsible.open {
+      max-height: 2600px;
+    }
+
     .event-grid {
       display: grid;
       grid-template-columns: 1fr 1.4fr;
       gap: 5rem;
       align-items: start;
+      padding-top: 3rem;
     }
 
-    .event-info p {
-      color: rgba(26, 26, 26, 0.74);
-      line-height: 1.9;
-      margin-bottom: 1.2rem;
+    .event-info-intro {
+      font-size: 1rem;
+      line-height: 1.85;
+      color: #3d3730;
+      margin-bottom: 2rem;
     }
 
     .event-detail {
-      display: block;
-      margin-bottom: 1rem;
-    }
-
-    .event-detail-icon {
-      display: none;
+      padding-left: 1rem;
+      border-left: 2px solid var(--accent);
+      margin-bottom: 1.1rem;
     }
 
     .event-detail-text {
-      color: rgba(26, 26, 26, 0.68);
+      color: #3d3730;
       font-size: 0.95rem;
-      line-height: 1.6;
-    }
-
-    .event-form-wrap {
-      width: 100%;
-    }
-
-    .event-toggle {
-      width: 100%;
-      text-align: center;
-    }
-
-    .event-form-panel {
-      display: none;
-      margin-top: 1.25rem;
-    }
-
-    .event-form-panel.open {
-      display: block;
+      line-height: 1.65;
     }
 
     .form-group {
@@ -845,10 +887,31 @@
     /* RESPONSIVE */
     @media (max-width: 900px) {
       .about-grid,
-      .video-wrap,
       .event-grid {
         grid-template-columns: 1fr;
         gap: 3rem;
+      }
+
+      .video-wrap {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .video-copy {
+        order: 2;
+      }
+
+      .video-media {
+        order: 1;
+      }
+
+      .video-copy .btn-primary {
+        display: none;
+      }
+
+      .video-mobile-button {
+        display: block;
+        order: 3;
       }
 
       .about-image-stack { height: 320px; }
@@ -860,14 +923,6 @@
 
       .form-row-4 {
         grid-template-columns: repeat(2, 1fr);
-      }
-
-      .video-copy {
-        order: 2;
-      }
-
-      .video-media {
-        order: 1;
       }
 
       .about-badge {
@@ -1087,6 +1142,10 @@
             </iframe>
           </div>
         </div>
+        <div class="video-mobile-button">
+          <a href="https://evolve.com/vacation-rentals/us/ok/calera/449745?queryID=5a484e678e0f3f04e77c75612ff67ec5"
+             target="_blank" class="btn-primary">Book Your Stay</a>
+        </div>
       </div>
     </div>
   </section>
@@ -1114,97 +1173,109 @@
     </div>
   </section>
 
-  <section id="events">
+  <section id="events" aria-labelledby="events-heading">
     <div class="section-inner">
-      <div class="event-grid">
-        <div class="event-info">
-          <div class="section-label">Host Your Event</div>
-          <h2 class="section-heading">Planning Something <em>Special?</em></h2>
-          <div class="divider"></div>
-          <p>
-            The Copper Roost is an ideal venue for reunions, retreats, celebrations, and more.
-            Fill out the form and we'll be in touch to help make your event unforgettable.
-          </p>
-          <div class="event-detail">
-            <div class="event-detail-text">Near Calera, Oklahoma, just minutes from Lake Texoma and Choctaw Casino</div>
+
+      <div style="text-align:center;max-width:620px;margin:0 auto;">
+        <p class="section-label">Host Your Event</p>
+        <h2 id="events-heading" class="section-heading">Planning Something <em>Special?</em></h2>
+        <div class="divider" style="margin:0 auto 1.5rem;" aria-hidden="true"></div>
+        <p style="color:#3d3730;line-height:1.9;margin-bottom:2rem;">
+          Whether you're planning a milestone birthday, a family reunion, a corporate retreat, or any other special occasion, The Copper Roost offers the space, amenities, and atmosphere to make it unforgettable. Fill out the form below and we'll be in touch to help you plan every detail.
+        </p>
+      </div>
+
+      <div class="events-toggle-wrap">
+        <button class="events-toggle-btn" id="events-toggle" type="button" aria-expanded="false" aria-controls="events-collapsible">
+          <span>Request Event Info</span>
+          <span class="events-toggle-icon" aria-hidden="true">
+            <svg width="14" height="9" viewBox="0 0 14 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M1 1L7 7.5L13 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+        </button>
+      </div>
+
+      <div class="events-collapsible" id="events-collapsible" aria-hidden="true">
+        <div class="event-grid">
+          <div class="event-info">
+            <p class="event-info-intro">
+              The Copper Roost sits just outside Calera, Oklahoma, minutes from Lake Texoma and Choctaw Casino. With 5,000 square feet of beautifully designed space, it's one of the most versatile private event venues in southern Oklahoma, with the warmth and character of a true family home.
+            </p>
+            <div class="event-detail">
+              <p class="event-detail-text">Located near Calera, Oklahoma, minutes from Lake Texoma and Choctaw Casino</p>
+            </div>
+            <div class="event-detail">
+              <p class="event-detail-text">Up to 16 overnight guests, plus additional day-event capacity for larger gatherings</p>
+            </div>
+            <div class="event-detail">
+              <p class="event-detail-text">Family reunions, milestone birthdays, bachelorette weekends, corporate retreats, and more</p>
+            </div>
           </div>
-          <div class="event-detail">
-            <div class="event-detail-text">Up to 16 overnight guests, plus additional day-event capacity</div>
-          </div>
-          <div class="event-detail">
-            <div class="event-detail-text">Family reunions, corporate retreats, milestone birthdays, and more</div>
-          </div>
-        </div>
 
-        <div class="event-form-wrap">
-          <button type="button" class="event-toggle btn-outline" id="event-toggle">
-            Plan Your Event
-          </button>
-
-          <div class="event-form-panel" id="event-form-panel">
-            <form id="event-form">
-              <div class="form-row">
-                <div class="form-group">
-                  <label for="fname">First Name *</label>
-                  <input type="text" id="fname" name="first_name" required />
-                </div>
-                <div class="form-group">
-                  <label for="lname">Last Name *</label>
-                  <input type="text" id="lname" name="last_name" required />
-                </div>
-              </div>
-
-              <div class="form-row">
-                <div class="form-group">
-                  <label for="phone">Phone *</label>
-                  <input type="tel" id="phone" name="phone" required />
-                </div>
-                <div class="form-group">
-                  <label for="email">Email</label>
-                  <input type="email" id="email" name="email" />
-                </div>
-              </div>
-
+          <form id="event-form" novalidate aria-label="Event request form">
+            <div class="form-row">
               <div class="form-group">
-                <label for="event-type">Type of Event *</label>
-                <input type="text" id="event-type" name="event_type" required />
+                <label for="fname">First Name *</label>
+                <input type="text" id="fname" name="first_name" required autocomplete="given-name" />
               </div>
-
               <div class="form-group">
-                <label for="attending">Estimated Number of People Attending *</label>
-                <input type="number" id="attending" name="estimated_attending" min="1" required />
+                <label for="lname">Last Name *</label>
+                <input type="text" id="lname" name="last_name" required autocomplete="family-name" />
               </div>
+            </div>
 
-              <div class="form-row form-row-4">
-                <div class="form-group">
-                  <label for="start-date">Start Date of Event *</label>
-                  <input type="date" id="start-date" name="start_date" required />
-                </div>
-                <div class="form-group">
-                  <label for="start-time">Start Time *</label>
-                  <input type="time" id="start-time" name="start_time" required />
-                </div>
-                <div class="form-group">
-                  <label for="end-date">End Date of Event *</label>
-                  <input type="date" id="end-date" name="end_date" required />
-                </div>
-                <div class="form-group">
-                  <label for="end-time">End Time *</label>
-                  <input type="time" id="end-time" name="end_time" required />
-                </div>
-              </div>
-
+            <div class="form-row">
               <div class="form-group">
-                <label for="message">Additional Useful Information *</label>
-                <textarea id="message" name="message" required placeholder="Tell us about your event, setup needs, questions, and any special details."></textarea>
+                <label for="phone">Phone *</label>
+                <input type="tel" id="phone" name="phone" required autocomplete="tel" />
               </div>
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" autocomplete="email" />
+              </div>
+            </div>
 
-              <button type="submit" class="btn-primary" style="width:100%;justify-content:center;">Submit Request</button>
-              <div id="form-status"></div>
-            </form>
-          </div>
+            <div class="form-group">
+              <label for="event-type">Type of Event *</label>
+              <input type="text" id="event-type" name="event_type" required placeholder="e.g. Family Reunion, Birthday, Retreat…" />
+            </div>
+
+            <div class="form-group">
+              <label for="attending">Estimated Attendance *</label>
+              <input type="number" id="attending" name="estimated_attending" min="1" required />
+            </div>
+
+            <div class="form-row form-row-4">
+              <div class="form-group">
+                <label for="start-date">Start Date *</label>
+                <input type="date" id="start-date" name="start_date" required />
+              </div>
+              <div class="form-group">
+                <label for="start-time">Start Time *</label>
+                <input type="time" id="start-time" name="start_time" required />
+              </div>
+              <div class="form-group">
+                <label for="end-date">End Date *</label>
+                <input type="date" id="end-date" name="end_date" required />
+              </div>
+              <div class="form-group">
+                <label for="end-time">End Time *</label>
+                <input type="time" id="end-time" name="end_time" required />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="message">Additional Details *</label>
+              <textarea id="message" name="message" required placeholder="Tell us about your event, setup needs, questions, and any special requests."></textarea>
+            </div>
+
+            <button type="submit" class="btn-primary" style="width:100%;">Submit Request</button>
+            <div id="form-status" role="alert"></div>
+          </form>
         </div>
       </div>
+
     </div>
   </section>
 
@@ -1331,12 +1402,18 @@
       if (e.key === 'ArrowRight') document.getElementById('lightbox-next').click();
     });
 
-    const eventToggle = document.getElementById('event-toggle');
-    const eventFormPanel = document.getElementById('event-form-panel');
+    const toggleBtn = document.getElementById('events-toggle');
+    const collapsible = document.getElementById('events-collapsible');
 
-    eventToggle.addEventListener('click', () => {
-      const isOpen = eventFormPanel.classList.toggle('open');
-      eventToggle.textContent = isOpen ? 'Hide Event Form' : 'Plan Your Event';
+    toggleBtn.addEventListener('click', () => {
+      const isOpen = collapsible.classList.contains('open');
+      collapsible.classList.toggle('open');
+      toggleBtn.classList.toggle('open');
+      toggleBtn.setAttribute('aria-expanded', String(!isOpen));
+      collapsible.setAttribute('aria-hidden', String(isOpen));
+      if (!isOpen) {
+        setTimeout(() => collapsible.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
+      }
     });
 
     const FORMSPREE_ENDPOINT = 'https://formspree.io/f/YOUR_FORMSPREE_ID';
