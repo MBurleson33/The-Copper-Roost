@@ -331,7 +331,7 @@
 
     .about-badge {
       position: absolute;
-      bottom: 20%;
+      bottom: 14%;
       right: -1rem;
       background: var(--accent);
       color: #fff;
@@ -342,6 +342,7 @@
       padding: 0.8rem 1.2rem;
       writing-mode: vertical-rl;
       text-orientation: mixed;
+      z-index: 2;
     }
 
     /* AMENITIES */
@@ -590,6 +591,14 @@
       align-items: center;
     }
 
+    .video-copy {
+      order: 1;
+    }
+
+    .video-media {
+      order: 2;
+    }
+
     .video-frame {
       position: relative;
       padding-bottom: 56.25%;
@@ -652,23 +661,36 @@
     }
 
     .event-detail {
-      display: flex;
-      align-items: flex-start;
-      gap: 1rem;
+      display: block;
       margin-bottom: 1rem;
     }
 
     .event-detail-icon {
-      color: var(--accent);
-      font-size: 1.1rem;
-      margin-top: 0.1rem;
-      flex-shrink: 0;
+      display: none;
     }
 
     .event-detail-text {
       color: rgba(26, 26, 26, 0.68);
       font-size: 0.95rem;
       line-height: 1.6;
+    }
+
+    .event-form-wrap {
+      width: 100%;
+    }
+
+    .event-toggle {
+      width: 100%;
+      text-align: center;
+    }
+
+    .event-form-panel {
+      display: none;
+      margin-top: 1.25rem;
+    }
+
+    .event-form-panel.open {
+      display: block;
     }
 
     .form-group {
@@ -838,6 +860,18 @@
 
       .form-row-4 {
         grid-template-columns: repeat(2, 1fr);
+      }
+
+      .video-copy {
+        order: 2;
+      }
+
+      .video-media {
+        order: 1;
+      }
+
+      .about-badge {
+        display: none;
       }
     }
 
@@ -1031,7 +1065,7 @@
   <section id="video-section">
     <div class="section-inner">
       <div class="video-wrap">
-        <div>
+        <div class="video-copy">
           <div class="section-label">Take a Tour</div>
           <h2 class="section-heading">See the Roost <em>Come to Life</em></h2>
           <div class="divider"></div>
@@ -1042,14 +1076,16 @@
           <a href="https://evolve.com/vacation-rentals/us/ok/calera/449745?queryID=5a484e678e0f3f04e77c75612ff67ec5"
              target="_blank" class="btn-primary">Book Your Stay</a>
         </div>
-        <div class="video-frame">
-          <iframe
-            src="https://www.youtube.com/embed/UV-YWdOuRB4"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen
-            title="The Copper Roost property tour">
-          </iframe>
+        <div class="video-media">
+          <div class="video-frame">
+            <iframe
+              src="https://www.youtube.com/embed/UV-YWdOuRB4"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+              title="The Copper Roost property tour">
+            </iframe>
+          </div>
         </div>
       </div>
     </div>
@@ -1090,79 +1126,84 @@
             Fill out the form and we'll be in touch to help make your event unforgettable.
           </p>
           <div class="event-detail">
-            <span class="event-detail-icon">📍</span>
             <div class="event-detail-text">Near Calera, Oklahoma, just minutes from Lake Texoma and Choctaw Casino</div>
           </div>
           <div class="event-detail">
-            <span class="event-detail-icon">👥</span>
             <div class="event-detail-text">Up to 16 overnight guests, plus additional day-event capacity</div>
           </div>
           <div class="event-detail">
-            <span class="event-detail-icon">🎉</span>
             <div class="event-detail-text">Family reunions, corporate retreats, milestone birthdays, and more</div>
           </div>
         </div>
 
-        <form id="event-form">
-          <div class="form-row">
-            <div class="form-group">
-              <label for="fname">First Name *</label>
-              <input type="text" id="fname" name="first_name" required />
-            </div>
-            <div class="form-group">
-              <label for="lname">Last Name *</label>
-              <input type="text" id="lname" name="last_name" required />
-            </div>
-          </div>
+        <div class="event-form-wrap">
+          <button type="button" class="event-toggle btn-outline" id="event-toggle">
+            Plan Your Event
+          </button>
 
-          <div class="form-row">
-            <div class="form-group">
-              <label for="phone">Phone *</label>
-              <input type="tel" id="phone" name="phone" required />
-            </div>
-            <div class="form-group">
-              <label for="email">Email</label>
-              <input type="email" id="email" name="email" />
-            </div>
-          </div>
+          <div class="event-form-panel" id="event-form-panel">
+            <form id="event-form">
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="fname">First Name *</label>
+                  <input type="text" id="fname" name="first_name" required />
+                </div>
+                <div class="form-group">
+                  <label for="lname">Last Name *</label>
+                  <input type="text" id="lname" name="last_name" required />
+                </div>
+              </div>
 
-          <div class="form-group">
-            <label for="event-type">Type of Event *</label>
-            <input type="text" id="event-type" name="event_type" required />
-          </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="phone">Phone *</label>
+                  <input type="tel" id="phone" name="phone" required />
+                </div>
+                <div class="form-group">
+                  <label for="email">Email</label>
+                  <input type="email" id="email" name="email" />
+                </div>
+              </div>
 
-          <div class="form-group">
-            <label for="attending">Estimated Number of People Attending *</label>
-            <input type="number" id="attending" name="estimated_attending" min="1" required />
-          </div>
+              <div class="form-group">
+                <label for="event-type">Type of Event *</label>
+                <input type="text" id="event-type" name="event_type" required />
+              </div>
 
-          <div class="form-row form-row-4">
-            <div class="form-group">
-              <label for="start-date">Start Date of Event *</label>
-              <input type="date" id="start-date" name="start_date" required />
-            </div>
-            <div class="form-group">
-              <label for="start-time">Start Time *</label>
-              <input type="time" id="start-time" name="start_time" required />
-            </div>
-            <div class="form-group">
-              <label for="end-date">End Date of Event *</label>
-              <input type="date" id="end-date" name="end_date" required />
-            </div>
-            <div class="form-group">
-              <label for="end-time">End Time *</label>
-              <input type="time" id="end-time" name="end_time" required />
-            </div>
-          </div>
+              <div class="form-group">
+                <label for="attending">Estimated Number of People Attending *</label>
+                <input type="number" id="attending" name="estimated_attending" min="1" required />
+              </div>
 
-          <div class="form-group">
-            <label for="message">Additional Useful Information *</label>
-            <textarea id="message" name="message" required placeholder="Tell us about your event, setup needs, questions, and any special details."></textarea>
-          </div>
+              <div class="form-row form-row-4">
+                <div class="form-group">
+                  <label for="start-date">Start Date of Event *</label>
+                  <input type="date" id="start-date" name="start_date" required />
+                </div>
+                <div class="form-group">
+                  <label for="start-time">Start Time *</label>
+                  <input type="time" id="start-time" name="start_time" required />
+                </div>
+                <div class="form-group">
+                  <label for="end-date">End Date of Event *</label>
+                  <input type="date" id="end-date" name="end_date" required />
+                </div>
+                <div class="form-group">
+                  <label for="end-time">End Time *</label>
+                  <input type="time" id="end-time" name="end_time" required />
+                </div>
+              </div>
 
-          <button type="submit" class="btn-primary" style="width:100%;justify-content:center;">Submit Request</button>
-          <div id="form-status"></div>
-        </form>
+              <div class="form-group">
+                <label for="message">Additional Useful Information *</label>
+                <textarea id="message" name="message" required placeholder="Tell us about your event, setup needs, questions, and any special details."></textarea>
+              </div>
+
+              <button type="submit" class="btn-primary" style="width:100%;justify-content:center;">Submit Request</button>
+              <div id="form-status"></div>
+            </form>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -1288,6 +1329,14 @@
       if (e.key === 'Escape') closeLightbox();
       if (e.key === 'ArrowLeft') document.getElementById('lightbox-prev').click();
       if (e.key === 'ArrowRight') document.getElementById('lightbox-next').click();
+    });
+
+    const eventToggle = document.getElementById('event-toggle');
+    const eventFormPanel = document.getElementById('event-form-panel');
+
+    eventToggle.addEventListener('click', () => {
+      const isOpen = eventFormPanel.classList.toggle('open');
+      eventToggle.textContent = isOpen ? 'Hide Event Form' : 'Plan Your Event';
     });
 
     const FORMSPREE_ENDPOINT = 'https://formspree.io/f/YOUR_FORMSPREE_ID';
