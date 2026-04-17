@@ -726,7 +726,7 @@
       flex-wrap: wrap;
     }
 
-    /* ── EVENTS (collapsible) ── */
+    /* ── EVENTS ── */
     #events { background: var(--bg-alt); }
 
     .events-toggle-wrap {
@@ -770,19 +770,13 @@
     }
     .events-toggle-btn.open .events-toggle-icon { transform: rotate(180deg); }
 
-    <!-- ONLY showing the parts that changed so you can safely replace -->
-
-
-/* ── EVENTS (FIXED) ── */
-
-.events-collapsible {
-  display: none;
-}
-
-.events-collapsible.open {
-  display: block;
-}
-
+    /* Smooth accordion without max-height bug */
+    .events-collapsible {
+      height: 0;
+      overflow: hidden;
+      transition: height 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+      will-change: height;
+    }
 
     .event-grid {
       display: grid;
@@ -1362,6 +1356,7 @@
   <script>
     document.getElementById('footer-year').textContent = new Date().getFullYear();
 
+    // ── GALLERY ──────────────────────────────────────────
     const galleryThumbsEl = document.getElementById('gallery-thumbs');
     const featuredImage   = document.getElementById('featured-image');
     const featuredWrap    = document.getElementById('gallery-featured');
@@ -1434,6 +1429,7 @@
 
     loadGallery();
 
+    // ── GALLERY MODAL ────────────────────────────────────
     const modal     = document.getElementById('gallery-modal');
     const gmImg     = document.getElementById('gm-img');
     const gmStrip   = document.getElementById('gm-strip');
@@ -1509,26 +1505,84 @@
       if (e.key === 'ArrowRight') goToModal((modalIndex + 1) % galleryImages.length);
     });
 
+    // ── EVENTS COLLAPSIBLE ───────────────────────────────
+    const toggleBtn = document.getElementById('events-toggle');
+    const collapsible = document.getElementById('events-collapsible');
+    let isAnimatingEvents = false;
+
+    // Start closed
+    collapsible.style.height = '0px';
+
+    function openEvents() {
+      if (isAnimatingEvents) return;
+      isAnimatingEvents = true;
+
+      collapsible.classList.add('open');
+      toggleBtn.classList.add('open');
+      toggleBtn.setAttribute('aria-expanded', 'true');
+      collapsible.setAttribute('aria-hidden', 'false');
+
+      // From current height to full content height
+      const fullHeight = collapsible.scrollHeight;
+      collapsible.style.height = fullHeight + 'px';
+
+      const onOpenEnd = (e) => {
+        if (e.propertyName !== 'height') return;
+        collapsible.style.height = 'auto';
+        collapsible.removeEventListener('transitionend', onOpenEnd);
+        isAnimatingEvents = false;
+      };
+
+      collapsible.addEventListener('transitionend', onOpenEnd);
+
+      setTimeout(() => {
+        collapsible.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 60);
+    }
+
+    function closeEvents() {
+      if (isAnimatingEvents) return;
+      isAnimatingEvents = true;
+
+      // If height is auto, lock it to current pixel height first
+      collapsible.style.height = collapsible.scrollHeight + 'px';
+
+      // Force reflow so transition starts properly
+      collapsible.offsetHeight;
+
+      collapsible.style.height = '0px';
+      toggleBtn.classList.remove('open');
+      toggleBtn.setAttribute('aria-expanded', 'false');
+      collapsible.setAttribute('aria-hidden', 'true');
+
+      const onCloseEnd = (e) => {
+        if (e.propertyName !== 'height') return;
+        collapsible.classList.remove('open');
+        collapsible.removeEventListener('transitionend', onCloseEnd);
+        isAnimatingEvents = false;
+      };
+
+      collapsible.addEventListener('transitionend', onCloseEnd);
+    }
+
     toggleBtn.addEventListener('click', () => {
-  const isOpen = collapsible.classList.contains('open');
+      const isOpen = toggleBtn.getAttribute('aria-expanded') === 'true';
+      if (isOpen) {
+        closeEvents();
+      } else {
+        openEvents();
+      }
+    });
 
-  if (isOpen) {
-    collapsible.classList.remove('open');
-    toggleBtn.classList.remove('open');
-    toggleBtn.setAttribute('aria-expanded', 'false');
-    collapsible.setAttribute('aria-hidden', 'true');
-  } else {
-    collapsible.classList.add('open');
-    toggleBtn.classList.add('open');
-    toggleBtn.setAttribute('aria-expanded', 'true');
-    collapsible.setAttribute('aria-hidden', 'false');
+    // Recalculate open accordion height on resize/orientation change
+    window.addEventListener('resize', () => {
+      const isOpen = toggleBtn.getAttribute('aria-expanded') === 'true';
+      if (isOpen && !isAnimatingEvents) {
+        collapsible.style.height = 'auto';
+      }
+    });
 
-    setTimeout(() => {
-      collapsible.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }, 50);
-  }
-});
-
+    // ── EVENT FORM ───────────────────────────────────────
     const FORMSPREE_ENDPOINT = 'https://formspree.io/f/YOUR_FORMSPREE_ID';
 
     document.getElementById('event-form').addEventListener('submit', async function(e) {
@@ -1558,10 +1612,12 @@
       btn.disabled = false;
     });
 
+    // ── HERO LOGO FALLBACK ───────────────────────────────
     document.getElementById('hero-rooster').addEventListener('error', function() {
       this.style.display = 'none';
     });
 
+    // ── STAT COUNT-UP ANIMATION ──────────────────────────
     function animateStat(el) {
       const target = parseFloat(el.dataset.target || '0');
       const format = el.dataset.format || 'integer';
