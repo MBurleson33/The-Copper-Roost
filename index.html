@@ -1041,6 +1041,14 @@
       .amenity-card { border-right: none !important; }
       .form-row, .form-row-4 { grid-template-columns: 1fr; }
     }
+    /* Screen-reader only utility */
+    .sr-only {
+      position: absolute;
+      width: 1px; height: 1px;
+      padding: 0; margin: -1px;
+      overflow: hidden; clip: rect(0,0,0,0);
+      white-space: nowrap; border: 0;
+    }
   </style>
 </head>
 <body>
@@ -1376,17 +1384,6 @@
 
     <div class="footer-legal">© <span id="footer-year">2025</span> The Copper Roost. All rights reserved. Est. 2021 — Calera, Oklahoma.</div>
   </footer>
-
-  <style>
-    /* Screen-reader only utility */
-    .sr-only {
-      position: absolute;
-      width: 1px; height: 1px;
-      padding: 0; margin: -1px;
-      overflow: hidden; clip: rect(0,0,0,0);
-      white-space: nowrap; border: 0;
-    }
-  </style>
 
   <script>
     // ── AUTO YEAR ────────────────────────────────────────
