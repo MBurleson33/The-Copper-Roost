@@ -83,9 +83,7 @@
     html {
       scroll-behavior: smooth;
       overflow-x: clip;
-      /* Match body background so no gap shows if html is taller than body */
-      background: #f3eee7; /* same as footer bg — what's visible at the very bottom */
-      height: 100%;
+      background: #f3eee7;
     }
 
     body {
@@ -94,13 +92,7 @@
       color: var(--text);
       font-family: 'Lato', sans-serif;
       font-weight: 300;
-      min-height: 100%;
-      display: flex;
-      flex-direction: column;
     }
-
-    /* Make main fill remaining space so footer stays at bottom */
-    main { flex: 1; }
 
     /* Skip-to-content for keyboard / screen readers */
     .skip-link {
@@ -207,6 +199,7 @@
     #hero {
       position: relative;
       height: 100vh;
+      height: 100dvh; /* dvh accounts for iOS browser chrome — prevents overscroll */
       min-height: 600px;
       display: flex;
       flex-direction: column;
