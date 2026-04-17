@@ -447,7 +447,7 @@
       overflow: hidden;
       background: rgba(0,0,0,0.05);
       border: 1px solid rgba(26,26,26,0.08);
-      cursor: zoom-in;
+      cursor: pointer;
     }
 
     .gallery-featured img {
@@ -544,7 +544,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 1.25rem 2rem;
+      padding: 0.75rem 1rem;
       border-bottom: 1px solid rgba(255,255,255,0.08);
       flex-shrink: 0;
     }
@@ -587,8 +587,8 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 1.5rem;
-      padding: 1.5rem;
+      gap: 1rem;
+      padding: 0.75rem 1rem;
       min-height: 0;
     }
 
@@ -597,27 +597,23 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      width: 100%;
+      height: 100%;
       max-height: 100%;
-      overflow: auto;
-      cursor: default;
     }
 
     #gm-img {
-      max-width: 100%;
-      max-height: calc(100vh - 200px);
+      width: auto;
+      height: auto;
+      max-width: 92vw;
+      max-height: 88vh;
       object-fit: contain;
       display: block;
-      transition: opacity 0.2s, transform 0.3s ease, cursor 0.2s;
-      cursor: zoom-in;
-      transform-origin: center center;
+      transition: opacity 0.2s;
+      cursor: default;
     }
 
     #gm-img.fading { opacity: 0; }
-
-    #gm-img.zoomed {
-      transform: scale(1.8);
-      cursor: zoom-out;
-    }
 
     .gm-nav {
       background: none;
@@ -639,7 +635,7 @@
     .gm-strip {
       display: flex;
       gap: 6px;
-      padding: 1rem 2rem 1.5rem;
+      padding: 0.5rem 1rem 0.75rem;
       overflow-x: auto;
       flex-shrink: 0;
       justify-content: center;
@@ -998,14 +994,19 @@
       .video-text { order: 1; }
       .video-frame { order: 2; width: 100%; }
       #video-mobile-btn { order: 3; }
+
+      .gm-main { gap: 0.75rem; padding: 0.5rem; }
+      .gm-header { padding: 0.65rem 0.75rem; }
+      .gm-strip { padding: 0.4rem 0.75rem 0.6rem; }
+      #gm-img { max-width: 94vw; max-height: 84vh; }
     }
 
     @media (max-width: 700px) {
       .gallery-featured-wrap { grid-template-columns: 44px 1fr 44px; gap: 0.5rem; }
       .gallery-arrow { width: 44px; height: 44px; font-size: 1.5rem; }
       .gallery-thumbs { grid-template-columns: repeat(2, 1fr); }
-      .gm-main { gap: 0.75rem; padding: 1rem; }
       .gm-nav { width: 44px; height: 44px; font-size: 1.4rem; }
+      .gm-title { font-size: 0.55rem; letter-spacing: 0.22em; }
     }
 
     @media (max-width: 600px) {
@@ -1013,6 +1014,15 @@
       .amenity-card { border-right: none !important; }
       .stat-row { gap: 1.5rem; }
       .form-row, .form-row-4 { grid-template-columns: 1fr; }
+
+      .gm-strip {
+        display: none;
+      }
+
+      #gm-img {
+        max-width: 96vw;
+        max-height: 82vh;
+      }
     }
   </style>
 </head>
@@ -1122,7 +1132,7 @@
         <button class="gallery-arrow" id="gallery-prev" aria-label="Previous photo">&#x2039;</button>
         <div class="gallery-featured" id="gallery-featured" role="img" aria-label="Featured property photo">
           <img id="featured-image" src="" alt="Featured photo of The Copper Roost" />
-          <div class="gallery-zoom-hint" aria-hidden="true">Click to zoom</div>
+          <div class="gallery-zoom-hint" aria-hidden="true">View larger</div>
         </div>
         <button class="gallery-arrow" id="gallery-next" aria-label="Next photo">&#x203a;</button>
       </div>
@@ -1450,7 +1460,6 @@
 
     function goToModal(index) {
       modalIndex = index;
-      gmImg.classList.remove('zoomed');
       gmImg.classList.add('fading');
 
       setTimeout(() => {
@@ -1472,7 +1481,6 @@
       modal.classList.add('open');
       document.body.style.overflow = 'hidden';
       modalIndex = index;
-      gmImg.classList.remove('zoomed');
       gmImg.src = galleryImages[index];
       gmImg.alt = `The Copper Roost — photo ${index + 1} of ${galleryImages.length}`;
       gmCounter.textContent = `${index + 1} / ${galleryImages.length}`;
@@ -1487,14 +1495,8 @@
     function closeModal() {
       modal.classList.remove('open');
       document.body.style.overflow = '';
-      gmImg.classList.remove('zoomed');
       if (lastFocused) lastFocused.focus();
     }
-
-    gmImg.addEventListener('click', () => {
-      if (!galleryImages.length) return;
-      gmImg.classList.toggle('zoomed');
-    });
 
     document.getElementById('gm-close').addEventListener('click', closeModal);
     modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
@@ -1506,14 +1508,8 @@
     document.addEventListener('keydown', e => {
       if (!modal.classList.contains('open')) return;
       if (e.key === 'Escape') closeModal();
-      if (e.key === 'ArrowLeft') {
-        gmImg.classList.remove('zoomed');
-        goToModal((modalIndex - 1 + galleryImages.length) % galleryImages.length);
-      }
-      if (e.key === 'ArrowRight') {
-        gmImg.classList.remove('zoomed');
-        goToModal((modalIndex + 1) % galleryImages.length);
-      }
+      if (e.key === 'ArrowLeft') goToModal((modalIndex - 1 + galleryImages.length) % galleryImages.length);
+      if (e.key === 'ArrowRight') goToModal((modalIndex + 1) % galleryImages.length);
     });
 
     const toggleBtn   = document.getElementById('events-toggle');
