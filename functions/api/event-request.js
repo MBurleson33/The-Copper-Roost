@@ -1,3 +1,9 @@
+export async function onRequestGet() {
+  return new Response(JSON.stringify({ ok: true, message: "Function is live." }), {
+    headers: { "Content-Type": "application/json" }
+  });
+}
+
 export async function onRequestPost(context) {
   try {
     const { request, env } = context;
