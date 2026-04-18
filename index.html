@@ -192,7 +192,6 @@
       outline-offset: 3px;
     }
 
-    /* ── HERO ── */
     #hero {
       position: relative;
       height: 100vh;
@@ -312,7 +311,6 @@
       50%       { opacity: 1;   transform: scaleY(1.15); }
     }
 
-    /* ── ABOUT ── */
     #about { background: var(--bg-alt); }
 
     .about-grid {
@@ -399,7 +397,6 @@
       z-index: 2;
     }
 
-    /* ── AMENITIES ── */
     #amenities { background: #faf6f0; }
 
     .amenities-intro {
@@ -444,7 +441,6 @@
       margin: 0 auto;
     }
 
-    /* ── GALLERY ── */
     #gallery { background: var(--bg-alt-2); }
 
     .gallery-header {
@@ -547,7 +543,6 @@
       text-align: center;
     }
 
-    /* ── GALLERY MODAL ── */
     #gallery-modal {
       display: none;
       position: fixed;
@@ -669,7 +664,6 @@
     .gm-strip-thumb:hover { opacity: 0.75; }
     .gm-strip-thumb.active { opacity: 1; border-color: var(--accent); }
 
-    /* ── VIDEO ── */
     #video-section { background: var(--bg); }
 
     .video-wrap {
@@ -701,7 +695,6 @@
       border: 0;
     }
 
-    /* ── BOOK ── */
     #book {
       background: linear-gradient(135deg, #f7f2eb 0%, #efe6da 100%);
       border-top: 1px solid var(--border);
@@ -727,7 +720,6 @@
       flex-wrap: wrap;
     }
 
-    /* ── EVENTS (fixed for mobile) ── */
     #events { background: var(--bg-alt); }
 
     .events-toggle-wrap {
@@ -869,7 +861,6 @@
       color: #8b1c1c;
     }
 
-    /* ── FOOTER ── */
     footer {
       background: #f3eee7;
       border-top: 1px solid var(--border);
@@ -963,7 +954,6 @@
       .footer-links { flex-wrap: wrap; justify-content: center; }
     }
 
-    /* ── FIXED BOOK ── */
     .fixed-book { display: none; }
 
     @media (min-width: 901px) {
@@ -1361,10 +1351,8 @@
   </footer>
 
   <script>
-    // ── AUTO YEAR ────────────────────────────────────────
     document.getElementById('footer-year').textContent = new Date().getFullYear();
 
-    // ── GALLERY ──────────────────────────────────────────
     const galleryThumbsEl = document.getElementById('gallery-thumbs');
     const featuredImage   = document.getElementById('featured-image');
     const featuredWrap    = document.getElementById('gallery-featured');
@@ -1437,7 +1425,6 @@
 
     loadGallery();
 
-    // ── GALLERY MODAL ────────────────────────────────────
     const modal     = document.getElementById('gallery-modal');
     const gmImg     = document.getElementById('gm-img');
     const gmStrip   = document.getElementById('gm-strip');
@@ -1513,7 +1500,6 @@
       if (e.key === 'ArrowRight') goToModal((modalIndex + 1) % galleryImages.length);
     });
 
-    // ── EVENTS COLLAPSIBLE (mobile-safe + animated) ─────
     const toggleBtn = document.getElementById('events-toggle');
     const collapsible = document.getElementById('events-collapsible');
     const collapsibleInner = document.getElementById('events-collapsible-inner');
@@ -1590,42 +1576,10 @@
       }
     });
 
-    // ── EVENT FORM ───────────────────────────────────────
-    const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xyklwbng';
-
-    document.getElementById('event-form').addEventListener('submit', async function(e) {
-      e.preventDefault();
-      const btn    = this.querySelector('button[type="submit"]');
-      const status = document.getElementById('form-status');
-      btn.textContent = 'Sending…';
-      btn.disabled = true;
-      try {
-        const res = await fetch(FORMSPREE_ENDPOINT, {
-          method: 'POST',
-          body: new FormData(this),
-          headers: { Accept: 'application/json' }
-        });
-        if (res.ok) {
-          status.className = 'success';
-          status.textContent = 'Your request has been sent. We will be in touch soon.';
-          this.reset();
-        } else {
-          throw new Error();
-        }
-      } catch {
-        status.className = 'error';
-        status.textContent = 'Something went wrong. Please try again or reach out directly.';
-      }
-      btn.textContent = 'Submit Request';
-      btn.disabled = false;
-    });
-
-    // ── HERO LOGO FALLBACK ───────────────────────────────
     document.getElementById('hero-rooster').addEventListener('error', function() {
       this.style.display = 'none';
     });
 
-    // ── STAT COUNT-UP ANIMATION ──────────────────────────
     function animateStat(el) {
       const target = parseFloat(el.dataset.target || '0');
       const format = el.dataset.format || 'integer';
@@ -1672,6 +1626,45 @@
 
     document.querySelectorAll('.stat-num[data-target]').forEach(el => {
       statsObserver.observe(el);
+    });
+
+    const FUNCTION_ENDPOINT = '/api/event-request';
+
+    document.getElementById('event-form').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const btn = this.querySelector('button[type="submit"]');
+      const status = document.getElementById('form-status');
+
+      status.className = '';
+      status.textContent = '';
+
+      btn.textContent = 'Sending...';
+      btn.disabled = true;
+
+      try {
+        const formData = new FormData(this);
+
+        const res = await fetch(FUNCTION_ENDPOINT, {
+          method: 'POST',
+          body: formData
+        });
+
+        const data = await res.json().catch(() => ({}));
+
+        if (!res.ok || !data.ok) {
+          throw new Error(data.error || 'Submission failed');
+        }
+
+        status.className = 'success';
+        status.textContent = 'Your request has been sent. We will be in touch soon.';
+        this.reset();
+      } catch (error) {
+        status.className = 'error';
+        status.textContent = 'Something went wrong. Please try again or reach out directly.';
+      }
+
+      btn.textContent = 'Submit Request';
+      btn.disabled = false;
     });
   </script>
 </body>
