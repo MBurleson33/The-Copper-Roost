@@ -1,7 +1,10 @@
 export async function onRequestGet() {
-  return new Response(JSON.stringify({ ok: true, message: "Function is live." }), {
-    headers: { "Content-Type": "application/json" }
-  });
+  return new Response(
+    JSON.stringify({ ok: true, message: "Function is live." }),
+    {
+      headers: { "Content-Type": "application/json; charset=utf-8" }
+    }
+  );
 }
 
 export async function onRequestPost(context) {
@@ -9,7 +12,10 @@ export async function onRequestPost(context) {
     const { request, env } = context;
 
     const contentType = request.headers.get("content-type") || "";
-    if (!contentType.includes("multipart/form-data") && !contentType.includes("application/x-www-form-urlencoded")) {
+    if (
+      !contentType.includes("multipart/form-data") &&
+      !contentType.includes("application/x-www-form-urlencoded")
+    ) {
       return json(
         { ok: false, error: "Unsupported content type." },
         400
