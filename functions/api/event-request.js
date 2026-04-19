@@ -23,17 +23,19 @@ export async function onRequestPost(context) {
     }
 
     const formData = await request.formData();
+
     const honeypot = clean(formData.get("company"));
-const formStart = Number(formData.get("form_start"));
-const now = Date.now();
+    const formStart = Number(formData.get("form_start"));
+    const now = Date.now();
 
-if (honeypot) {
-  return json({ ok: true }, 200);
-}
+    if (honeypot) {
+      return json({ ok: true }, 200);
+    }
 
-if (formStart && now - formStart < 3000) {
-  return json({ ok: true }, 200);
-}
+    if (formStart && now - formStart < 3000) {
+      return json({ ok: true }, 200);
+    }
+
     const firstName = clean(formData.get("first_name"));
     const lastName = clean(formData.get("last_name"));
     const phone = clean(formData.get("phone"));
@@ -47,13 +49,13 @@ if (formStart && now - formStart < 3000) {
     const message = clean(formData.get("message"));
 
     if (message.length < 10) {
-  return json({ ok: true }, 200);
-}
+      return json({ ok: true }, 200);
+    }
 
     const lowerMsg = message.toLowerCase();
-if (lowerMsg.includes("http://") || lowerMsg.includes("https://")) {
-  return json({ ok: true }, 200);
-}
+    if (lowerMsg.includes("http://") || lowerMsg.includes("https://")) {
+      return json({ ok: true }, 200);
+    }
 
     const missing = [];
     if (!firstName) missing.push("first_name");
@@ -161,8 +163,7 @@ if (lowerMsg.includes("http://") || lowerMsg.includes("https://")) {
       endDate,
       endTime,
       message,
-      sourceUrl,
-      cfRay
+      sourceUrl
     });
 
     const notifyPayload = {
@@ -253,56 +254,137 @@ function escapeHtml(value) {
     .replaceAll("'", "&#39;");
 }
 
+function detailRow(label, value) {
+  return `
+    <tr>
+      <td style="padding:12px 14px; border:1px solid #e7dfd2; width:220px; background:#f8f4ed; font-size:13px; font-weight:700; color:#5a4d42; vertical-align:top;">
+        ${escapeHtml(label)}
+      </td>
+      <td style="padding:12px 14px; border:1px solid #e7dfd2; font-size:15px; color:#1f1f1f;">
+        ${escapeHtml(value)}
+      </td>
+    </tr>
+  `;
+}
+
 function buildNotificationHtml(data) {
   return `
-    <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #222;">
-      <h2 style="margin-bottom: 16px;">New Copper Roost Event Request</h2>
+    <div style="margin:0; padding:0; background:#f6f3ee; font-family:Arial, sans-serif; color:#1f1f1f;">
+      <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse; background:#f6f3ee; padding:24px 0;">
+        <tr>
+          <td align="center">
+            <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse; max-width:720px; background:#ffffff; border:1px solid #e7dfd2;">
+              
+              <tr>
+                <td style="padding:28px 32px; background:#b8720a; color:#ffffff;">
+                  <div style="font-size:12px; letter-spacing:2px; text-transform:uppercase; opacity:0.9;">The Copper Roost</div>
+                  <h1 style="margin:10px 0 0; font-size:28px; line-height:1.2; font-weight:700; color:#ffffff;">New Event Request</h1>
+                </td>
+              </tr>
 
-      <table style="border-collapse: collapse; width: 100%; max-width: 700px;">
-        ${row("First Name", data.firstName)}
-        ${row("Last Name", data.lastName)}
-        ${row("Phone", data.phone)}
-        ${row("Email", data.email || "Not provided")}
-        ${row("Type of Event", data.eventType)}
-        ${row("Estimated Attendance", data.estimatedAttending)}
-        ${row("Start Date", data.startDate)}
-        ${row("Start Time", data.startTime)}
-        ${row("End Date", data.endDate)}
-        ${row("End Time", data.endTime)}
-        ${row("Source URL", data.sourceUrl || "Unknown")}
-        ${row("CF Ray", data.cfRay || "N/A")}
+              <tr>
+                <td style="padding:28px 32px 12px;">
+                  <p style="margin:0 0 16px; font-size:16px; line-height:1.7; color:#40372f;">
+                    A new event request has been submitted through the website.
+                  </p>
+                </td>
+              </tr>
+
+              <tr>
+                <td style="padding:0 32px 12px;">
+                  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;">
+                    ${detailRow("Name", `${escapeHtml(data.firstName)} ${escapeHtml(data.lastName)}`)}
+                    ${detailRow("Phone", data.phone)}
+                    ${detailRow("Email", data.email || "Not provided")}
+                    ${detailRow("Event Type", data.eventType)}
+                    ${detailRow("Estimated Attendance", data.estimatedAttending)}
+                    ${detailRow("Start Date", data.startDate)}
+                    ${detailRow("Start Time", data.startTime)}
+                    ${detailRow("End Date", data.endDate)}
+                    ${detailRow("End Time", data.endTime)}
+                  </table>
+                </td>
+              </tr>
+
+              <tr>
+                <td style="padding:8px 32px 12px;">
+                  <div style="font-size:13px; letter-spacing:1.5px; text-transform:uppercase; color:#b8720a; margin-bottom:10px;">
+                    Additional Details
+                  </div>
+                  <div style="padding:16px; border:1px solid #e7dfd2; background:#faf8f4; font-size:15px; line-height:1.7; color:#2f2a25; white-space:pre-wrap;">
+${escapeHtml(data.message)}
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <td style="padding:8px 32px 28px;">
+                  <div style="font-size:12px; color:#7b6e61; line-height:1.6;">
+                    Submission source: ${escapeHtml(data.sourceUrl || "Unknown")}
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <td style="padding:18px 32px; background:#f3eee7; border-top:1px solid #e7dfd2; font-size:12px; color:#7b6e61;">
+                  The Copper Roost event request notification
+                </td>
+              </tr>
+
+            </table>
+          </td>
+        </tr>
       </table>
-
-      <h3 style="margin-top: 24px;">Additional Details</h3>
-      <div style="padding: 12px; border: 1px solid #ddd; background: #fafafa; white-space: pre-wrap;">${escapeHtml(data.message)}</div>
     </div>
   `;
 }
 
 function buildConfirmationHtml(data) {
   return `
-    <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #222;">
-      <h2 style="margin-bottom: 16px;">Thanks for reaching out to The Copper Roost</h2>
-      <p>Hi ${escapeHtml(data.firstName)},</p>
-      <p>We received your event request${data.eventType ? ` for <strong>${escapeHtml(data.eventType)}</strong>` : ""}.</p>
-      <p>
-        Requested dates:
-        <strong>${escapeHtml(data.startDate)}</strong>
-        to
-        <strong>${escapeHtml(data.endDate)}</strong>
-      </p>
-      <p>We’ll review the details and be in touch soon.</p>
-      <p>Thanks,<br>The Copper Roost</p>
-    </div>
-  `;
-}
+    <div style="margin:0; padding:0; background:#f6f3ee; font-family:Arial, sans-serif; color:#1f1f1f;">
+      <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse; background:#f6f3ee; padding:24px 0;">
+        <tr>
+          <td align="center">
+            <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse; max-width:720px; background:#ffffff; border:1px solid #e7dfd2;">
+              
+              <tr>
+                <td style="padding:28px 32px; background:#b8720a; color:#ffffff;">
+                  <div style="font-size:12px; letter-spacing:2px; text-transform:uppercase; opacity:0.9;">The Copper Roost</div>
+                  <h1 style="margin:10px 0 0; font-size:28px; line-height:1.2; font-weight:700; color:#ffffff;">We Received Your Request</h1>
+                </td>
+              </tr>
 
-function row(label, value) {
-  return `
-    <tr>
-      <td style="padding: 10px; border: 1px solid #ddd; width: 220px; background: #f5f5f5;"><strong>${escapeHtml(label)}</strong></td>
-      <td style="padding: 10px; border: 1px solid #ddd;">${escapeHtml(value)}</td>
-    </tr>
+              <tr>
+                <td style="padding:28px 32px;">
+                  <p style="margin:0 0 16px; font-size:16px; line-height:1.7; color:#40372f;">
+                    Hi ${escapeHtml(data.firstName)},
+                  </p>
+                  <p style="margin:0 0 16px; font-size:16px; line-height:1.7; color:#40372f;">
+                    We received your event request${data.eventType ? ` for <strong>${escapeHtml(data.eventType)}</strong>` : ""}.
+                  </p>
+                  <p style="margin:0 0 16px; font-size:16px; line-height:1.7; color:#40372f;">
+                    Requested dates: <strong>${escapeHtml(data.startDate)}</strong> to <strong>${escapeHtml(data.endDate)}</strong>
+                  </p>
+                  <p style="margin:0 0 16px; font-size:16px; line-height:1.7; color:#40372f;">
+                    We’ll review the details and be in touch soon.
+                  </p>
+                  <p style="margin:24px 0 0; font-size:16px; line-height:1.7; color:#40372f;">
+                    Thanks,<br>The Copper Roost
+                  </p>
+                </td>
+              </tr>
+
+              <tr>
+                <td style="padding:18px 32px; background:#f3eee7; border-top:1px solid #e7dfd2; font-size:12px; color:#7b6e61;">
+                  The Copper Roost event request confirmation
+                </td>
+              </tr>
+
+            </table>
+          </td>
+        </tr>
+      </table>
+    </div>
   `;
 }
 
