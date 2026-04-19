@@ -1258,6 +1258,8 @@
             </div>
 
             <form id="event-form" novalidate aria-label="Event request form">
+              <input type="text" name="company" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;opacity:0;height:0;width:0;pointer-events:none;">
+<input type="hidden" name="form_start" id="form_start">
               <div class="form-row">
                 <div class="form-group">
                   <label for="fname">First Name <span aria-hidden="true">*</span><span class="sr-only">(required)</span></label>
@@ -1629,6 +1631,8 @@
     });
 
     const FUNCTION_ENDPOINT = '/api/event-request';
+    
+    document.getElementById('form_start').value = Date.now();
 
     document.getElementById('event-form').addEventListener('submit', async function(e) {
       e.preventDefault();
