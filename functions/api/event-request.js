@@ -56,6 +56,12 @@ export async function onRequestPost(context) {
     }
 
     const basinEndpoint = env.BASIN_ENDPOINT;
+    const resendApiKey = env.RESEND_API_KEY;
+    const notifyEmails = parseEmailList(env.NOTIFY_EMAILS);
+    const fromEmail = clean(env.FROM_EMAIL);
+    const confirmationFromEmail = clean(env.CONFIRMATION_FROM_EMAIL || env.FROM_EMAIL);
+    const sendConfirmation = String(env.SEND_CONFIRMATION || "false").toLowerCase() === "true";
+
     if (!basinEndpoint) {
       return json(
         { ok: false, error: "Missing BASIN_ENDPOINT secret." },
@@ -63,6 +69,31 @@ export async function onRequestPost(context) {
       );
     }
 
+    if (!resendApiKey) {
+      return json(
+        { ok: false, error: "Missing RESEND_API_KEY secret." },
+        500
+      );
+    }
+
+    if (!notifyEmails.length) {
+      return json(
+        { ok: false, error: "Missing NOTIFY_EMAILS secret." },
+        500
+      );
+    }
+
+    if (!fromEmail) {
+      return json(
+        { ok: false, error: "Missing FROM_EMAIL secret." },
+        500
+      );
+    }
+
+    const sourceUrl = request.headers.get("origin") || "";
+    const cfRay = request.headers.get("cf-ray") || "";
+
+    // 1. Send submission to Basin for storage/logging
     const outbound = new FormData();
     outbound.set("_subject", "New Copper Roost Event Request");
     outbound.set("first_name", firstName);
@@ -76,8 +107,8 @@ export async function onRequestPost(context) {
     outbound.set("end_date", endDate);
     outbound.set("end_time", endTime);
     outbound.set("message", message);
-    outbound.set("source_url", request.headers.get("origin") || "");
-    outbound.set("cf_ray", request.headers.get("cf-ray") || "");
+    outbound.set("source_url", sourceUrl);
+    outbound.set("cf_ray", cfRay);
 
     const basinResponse = await fetch(basinEndpoint, {
       method: "POST",
@@ -97,6 +128,78 @@ export async function onRequestPost(context) {
       );
     }
 
+    // 2. Send notification email(s) through Resend
+    const notificationSubject = `New Copper Roost Event Request: ${firstName} ${lastName}`;
+    const notificationHtml = buildNotificationHtml({
+      firstName,
+      lastName,
+      phone,
+      email,
+      eventType,
+      estimatedAttending,
+      startDate,
+      startTime,
+      endDate,
+      endTime,
+      message,
+      sourceUrl,
+      cfRay
+    });
+
+    const notifyPayload = {
+      from: fromEmail,
+      to: notifyEmails,
+      subject: notificationSubject,
+      html: notificationHtml,
+      reply_to: email || undefined
+    };
+
+    const resendNotifyResponse = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${resendApiKey}`,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(notifyPayload)
+    });
+
+    if (!resendNotifyResponse.ok) {
+      const resendText = await resendNotifyResponse.text();
+      return json(
+        {
+          ok: false,
+          error: "Notification email failed.",
+          status: resendNotifyResponse.status,
+          details: resendText.slice(0, 500)
+        },
+        502
+      );
+    }
+
+    // 3. Optional confirmation email to submitter
+    if (sendConfirmation && email) {
+      const confirmationPayload = {
+        from: confirmationFromEmail,
+        to: [email],
+        subject: "We received your Copper Roost event request",
+        html: buildConfirmationHtml({
+          firstName,
+          eventType,
+          startDate,
+          endDate
+        })
+      };
+
+      await fetch("https://api.resend.com/emails", {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${resendApiKey}`,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(confirmationPayload)
+      });
+    }
+
     return json({ ok: true }, 200);
   } catch (error) {
     return json(
@@ -112,6 +215,76 @@ export async function onRequestPost(context) {
 
 function clean(value) {
   return typeof value === "string" ? value.trim() : "";
+}
+
+function parseEmailList(value) {
+  if (typeof value !== "string") return [];
+  return value
+    .split(",")
+    .map((email) => email.trim())
+    .filter(Boolean);
+}
+
+function escapeHtml(value) {
+  return String(value || "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#39;");
+}
+
+function buildNotificationHtml(data) {
+  return `
+    <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #222;">
+      <h2 style="margin-bottom: 16px;">New Copper Roost Event Request</h2>
+
+      <table style="border-collapse: collapse; width: 100%; max-width: 700px;">
+        ${row("First Name", data.firstName)}
+        ${row("Last Name", data.lastName)}
+        ${row("Phone", data.phone)}
+        ${row("Email", data.email || "Not provided")}
+        ${row("Type of Event", data.eventType)}
+        ${row("Estimated Attendance", data.estimatedAttending)}
+        ${row("Start Date", data.startDate)}
+        ${row("Start Time", data.startTime)}
+        ${row("End Date", data.endDate)}
+        ${row("End Time", data.endTime)}
+        ${row("Source URL", data.sourceUrl || "Unknown")}
+        ${row("CF Ray", data.cfRay || "N/A")}
+      </table>
+
+      <h3 style="margin-top: 24px;">Additional Details</h3>
+      <div style="padding: 12px; border: 1px solid #ddd; background: #fafafa; white-space: pre-wrap;">${escapeHtml(data.message)}</div>
+    </div>
+  `;
+}
+
+function buildConfirmationHtml(data) {
+  return `
+    <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #222;">
+      <h2 style="margin-bottom: 16px;">Thanks for reaching out to The Copper Roost</h2>
+      <p>Hi ${escapeHtml(data.firstName)},</p>
+      <p>We received your event request${data.eventType ? ` for <strong>${escapeHtml(data.eventType)}</strong>` : ""}.</p>
+      <p>
+        Requested dates:
+        <strong>${escapeHtml(data.startDate)}</strong>
+        to
+        <strong>${escapeHtml(data.endDate)}</strong>
+      </p>
+      <p>We’ll review the details and be in touch soon.</p>
+      <p>Thanks,<br>The Copper Roost</p>
+    </div>
+  `;
+}
+
+function row(label, value) {
+  return `
+    <tr>
+      <td style="padding: 10px; border: 1px solid #ddd; width: 220px; background: #f5f5f5;"><strong>${escapeHtml(label)}</strong></td>
+      <td style="padding: 10px; border: 1px solid #ddd;">${escapeHtml(value)}</td>
+    </tr>
+  `;
 }
 
 function json(data, status = 200) {
