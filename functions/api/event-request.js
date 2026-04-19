@@ -23,7 +23,17 @@ export async function onRequestPost(context) {
     }
 
     const formData = await request.formData();
+    const honeypot = clean(formData.get("company"));
+const formStart = Number(formData.get("form_start"));
+const now = Date.now();
 
+if (honeypot) {
+  return json({ ok: true }, 200);
+}
+
+if (formStart && now - formStart < 3000) {
+  return json({ ok: true }, 200);
+}
     const firstName = clean(formData.get("first_name"));
     const lastName = clean(formData.get("last_name"));
     const phone = clean(formData.get("phone"));
@@ -35,6 +45,15 @@ export async function onRequestPost(context) {
     const endDate = clean(formData.get("end_date"));
     const endTime = clean(formData.get("end_time"));
     const message = clean(formData.get("message"));
+
+    if (message.length < 10) {
+  return json({ ok: true }, 200);
+}
+
+    const lowerMsg = message.toLowerCase();
+if (lowerMsg.includes("http://") || lowerMsg.includes("https://")) {
+  return json({ ok: true }, 200);
+}
 
     const missing = [];
     if (!firstName) missing.push("first_name");
