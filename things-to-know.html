@@ -323,6 +323,34 @@
       line-height: 1.2;
     }
 
+    /* ── CHECKOUT NOTE ── */
+    .checkout-note {
+      margin-top: 2rem;
+      padding: 1.5rem 1.75rem;
+      border-left: 3px solid var(--accent);
+      background: rgba(184,114,10,0.05);
+    }
+
+    .checkout-note-label {
+      font-family: 'Cinzel', serif;
+      font-size: 0.62rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.6rem;
+    }
+
+    .checkout-note p {
+      font-size: 0.975rem;
+      line-height: 1.85;
+      color: var(--text-body);
+    }
+
+    .checkout-note p strong {
+      font-weight: 700;
+      color: var(--text);
+    }
+
     /* ── PLACEHOLDER NOTE ── */
     .placeholder-note {
       border: 1px dashed rgba(184,114,10,0.35);
@@ -519,29 +547,62 @@
       <div class="section-divider" aria-hidden="true"></div>
 
       <ul class="checklist" aria-label="Checkout checklist">
-
-        <!-- ── ADD CHECKOUT ITEMS HERE ──
-             Copy and paste this block for each item:
-
         <li>
           <div class="check-icon" aria-hidden="true"></div>
           <div class="check-text">
-            <strong>Item Title</strong>
-            Description of what guests need to do.
+            <strong>Strip All Beds & Towels</strong>
+            Strip all beds and place towels in bedroom doorways before you leave.
           </div>
         </li>
-
-        ────────────────────────────── -->
-
         <li>
           <div class="check-icon" aria-hidden="true"></div>
           <div class="check-text">
-            <strong>Content Coming Soon</strong>
-            Checkout instructions will be added here shortly.
+            <strong>Adjust Thermostats</strong>
+            Set thermostats to 78°F during summer and 64°F during winter.
           </div>
         </li>
-
+        <li>
+          <div class="check-icon" aria-hidden="true"></div>
+          <div class="check-text">
+            <strong>Run the Dishwasher</strong>
+            Load and start the dishwasher before you head out.
+          </div>
+        </li>
+        <li>
+          <div class="check-icon" aria-hidden="true"></div>
+          <div class="check-text">
+            <strong>Take Out the Trash</strong>
+            Take all trash to the outside trash can.
+          </div>
+        </li>
+        <li>
+          <div class="check-icon" aria-hidden="true"></div>
+          <div class="check-text">
+            <strong>Lights & Remotes</strong>
+            Ensure all lights are off and return all remotes to where you found them.
+          </div>
+        </li>
+        <li>
+          <div class="check-icon" aria-hidden="true"></div>
+          <div class="check-text">
+            <strong>Lock All Doors</strong>
+            Lock all doors upon your departure.
+          </div>
+        </li>
+        <li>
+          <div class="check-icon" aria-hidden="true"></div>
+          <div class="check-text">
+            <strong>Propane Tank</strong>
+            Ensure the propane tank on the grill is turned all the way to OFF.
+          </div>
+        </li>
       </ul>
+
+      <!-- Checkout time note -->
+      <div class="checkout-note">
+        <div class="checkout-note-label">Check-Out Time</div>
+        <p>Check-out time is <strong>strictly 11:00 a.m.</strong> Should you require a later check-out we will do our best, but you need to let us know beforehand. If we have guests arriving that day, it will be almost impossible to offer a late check-out due to the cleaners needing to prepare for those guests.</p>
+      </div>
     </section>
 
     <!-- ADDITIONAL SECTIONS — add more as needed -->
